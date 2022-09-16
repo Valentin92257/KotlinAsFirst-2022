@@ -140,7 +140,13 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int =
+    when {
+        (kingX == rookX || kingY == rookY) && (kingX - kingY != bishopX - bishopY || kingX + kingY == bishopX + bishopY) -> 1
+        (kingX != rookX && kingY != rookY) && (kingX - kingY == bishopX - bishopY || kingX + kingY == bishopX + bishopY) -> 2
+        (kingX == rookX || kingY == rookY) && (kingX - kingY == bishopX - bishopY || kingX + kingY == bishopX + bishopY) -> 3
+        else -> 0
+    }
 
 /**
  * Простая (2 балла)
