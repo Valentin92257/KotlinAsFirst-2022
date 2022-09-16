@@ -24,6 +24,7 @@ fun isNumberHappy(number: Int): Boolean {
     else
         return false
 }
+
 /**
  * Простая (2 балла)
  *
@@ -65,10 +66,10 @@ fun circleInside(
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
     when {
-        r - a >= 0 && (s - b >= 0) -> true
+        r - a >= 0 && s - b >= 0 -> true
         r - b >= 0 && s - a >= 0 -> true
 
-        r - a >= 0 && (s - c) >= 0 -> true
+        r - a >= 0 && s - c >= 0 -> true
         r - c >= 0 && s - a >= 0 -> true
 
         r - b >= 0 && s - c >= 0 -> true
