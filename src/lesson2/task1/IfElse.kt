@@ -68,16 +68,19 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String =
-    when {
-        (age - 100) % 10 == 1 && (age - 100 < 10 || age - 100 > 20) && age >= 100 -> "$age год"
-        (age - 100 >= 10 && age - 100 <= 20) || (age - 100) % 10 == 0 || (age - 100) % 10 >= 5 && age >= 100 -> "$age лет"
-        ((age - 100) % 10 > 1 && (age - 100) % 10 <= 4) && (age - 100 < 10 || age - 100 > 20) && age >= 100 -> "$age года"
-        age % 10 == 1 && (age < 10 || age > 20) && age < 100 -> "$age год"
-        (age >= 10 && age <= 20) || age % 10 == 0 || age % 10 >= 5 && age < 100 -> "$age лет"
-        //(age % 10 > 1 && age % 10 <= 4) && (age < 10 || age > 20) && age < 100 -> "$age года"
+fun ageDescription(age: Int): String {
+    var age1 :Int
+    if (age>=100)
+        age1=age-100
+    else
+        age1=age
+    return when {
+
+        age1 % 10 == 1 && (age1 < 10 || age1 > 20) && age1 < 100 -> "$age год"
+        (age1 >= 10 && age1 <= 20) || age1 % 10 == 0 || age1 % 10 >= 5 && age1 < 100 -> "$age лет"
         else -> "$age года"
     }
+}
 
 
 /**
@@ -114,16 +117,12 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    if (kingX != rookX1 && kingY != rookY1 && kingX != rookX2 && kingY != rookY2)
-        return 0
-    else
-        if (kingX == rookX1 || kingY == rookY1)
-            if (kingX == rookX2 || kingY == rookY2)
-                return 3
-            else
-                return 1
-        else
-            return 2
+    return when {
+        kingX != rookX1 && kingY != rookY1 && kingX != rookX2 && kingY != rookY2 -> 0
+        (kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2) -> 3
+        (kingX != rookX1 && kingY != rookY1) && (kingX == rookX2 || kingY == rookY2)-> 2
+        else -> 1
+    }
 }
 
 /**
