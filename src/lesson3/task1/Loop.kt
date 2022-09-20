@@ -2,6 +2,8 @@
 
 package lesson3.task1
 
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -106,14 +108,27 @@ fun fib(n: Int): Int {
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+
+fun minDivisor(n: Int): Int {
+    for(i in 2..(sqrt(n.toDouble())).toInt()){
+        if(n % i == 0)
+            return i
+    }
+return n
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int{
+    for(i in n-1 downTo (sqrt(n.toDouble())).toInt()){
+        if (n % i == 0)
+            return i
+    }
+    return 1
+}
 
 /**
  * Простая (2 балла)
@@ -131,7 +146,21 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var a=x
+    var count=0
+    while(a!=1){
+        if(a%2==0) {
+            a /= 2
+            count++
+        }
+        else{
+            a=3*a+1
+            count++
+    }
+    }
+    return count
+}
 
 /**
  * Средняя (3 балла)
@@ -139,7 +168,14 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var i= max(m,n)
+    while(m%i!=0 || n%i!=0){
+        i--
+    }
+    return m*n/i
+}
+
 
 /**
  * Средняя (3 балла)
@@ -148,7 +184,14 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    for(i in 2..min(m,n)){
+        if(m%i==0 && n%i==0){
+            return false
+        }
+    }
+    return true
+}
 
 /**
  * Средняя (3 балла)
@@ -158,6 +201,7 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int = TODO()
+
 
 /**
  * Средняя (3 балла)
@@ -222,4 +266,17 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {/*
+    if(n==1) return 1
+    if (n==2) return 1
+    var f1=1
+    var f2=1
+    var f3=0
+    for(i in 3..n){
+        f3=f1+f2
+        f1=f2
+        f2=f3
+    }
+    return f3*/
+
+}
