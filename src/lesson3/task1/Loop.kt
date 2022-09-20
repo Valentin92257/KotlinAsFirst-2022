@@ -76,11 +76,11 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var count=1
-    var n1= abs(n)
-    while (n1/10>0){
+    var count = 1
+    var n1 = abs(n)
+    while (n1 / 10 > 0) {
         count++
-        n1/=10
+        n1 /= 10
     }
     return count
 }
@@ -92,13 +92,13 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var a=1
-    var a1=1
-    var a2=1
-    for(i in 3..n){
-        a=a1+a2
-        a1=a2
-        a2=a
+    var a = 1
+    var a1 = 1
+    var a2 = 1
+    for (i in 3..n) {
+        a = a1 + a2
+        a1 = a2
+        a2 = a
     }
     return a
 }
@@ -111,11 +111,11 @@ fun fib(n: Int): Int {
  */
 
 fun minDivisor(n: Int): Int {
-    for(i in 2..(sqrt(n.toDouble())).toInt()){
-        if(n % i == 0)
+    for (i in 2..(sqrt(n.toDouble())).toInt()) {
+        if (n % i == 0)
             return i
     }
-return n
+    return n
 }
 
 /**
@@ -123,8 +123,8 @@ return n
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int{
-    for(i in n-1 downTo (sqrt(n.toDouble())).toInt()){
+fun maxDivisor(n: Int): Int {
+    for (i in n - 1 downTo (sqrt(n.toDouble())).toInt()) {
         if (n % i == 0)
             return i
     }
@@ -148,17 +148,16 @@ fun maxDivisor(n: Int): Int{
  * этого для какого-либо начального X > 0.
  */
 fun collatzSteps(x: Int): Int {
-    var a=x
-    var count=0
-    while(a!=1){
-        if(a%2==0) {
+    var a = x
+    var count = 0
+    while (a != 1) {
+        if (a % 2 == 0) {
             a /= 2
             count++
-        }
-        else{
-            a=3*a+1
+        } else {
+            a = 3 * a + 1
             count++
-    }
+        }
     }
     return count
 }
@@ -170,11 +169,11 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var i= max(m,n)
-    while(m%i!=0 || n%i!=0){
+    var i = max(m, n)
+    while (m % i != 0 || n % i != 0) {
         i--
     }
-    return m*n/i
+    return m * n / i
 }
 
 
@@ -186,8 +185,8 @@ fun lcm(m: Int, n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    for(i in 2..min(m,n)){
-        if(m%i==0 && n%i==0){
+    for (i in 2..min(m, n)) {
+        if (m % i == 0 && n % i == 0) {
             return false
         }
     }
@@ -267,4 +266,23 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var count = 1
+    var f1 = 1
+    var f2 = 1
+    var f3 = 0
+    while (n != count) {
+        f1 = f2
+        f2 = f3
+        f3 = f1 + f2
+        while (f3 / 10 > 0) {
+            count++
+            f1 /= 10
+        }
+    }
+    return f3 % 10
+}
+
+
+
+
