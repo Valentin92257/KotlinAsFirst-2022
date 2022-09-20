@@ -270,7 +270,7 @@ fun fibSequenceDigit(n: Int): Int {
     var count = 1
     var f1 = 1
     var f2 = 1
-    var f3 = 0
+    var f3 = 1
     while (n != count) {
         f1 = f2
         f2 = f3
