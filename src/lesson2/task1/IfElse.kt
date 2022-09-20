@@ -76,8 +76,8 @@ fun ageDescription(age: Int): String {
         age1 = age
     return when {
 
-        age1 % 10 == 1 && (age1 < 10 || age1 > 20) && age1 < 100 -> "$age год"
-        (age1 >= 10 && age1 <= 20) || age1 % 10 == 0 || age1 % 10 >= 5 && age1 < 100 -> "$age лет"
+        age1 % 10 == 1 && (age1 < 10 || age1 > 20) -> "$age год"
+        (age1 >= 10 && age1 <= 20) || age1 % 10 == 0 || age1 % 10 >= 5 -> "$age лет"
         else -> "$age года"
     }
 }
