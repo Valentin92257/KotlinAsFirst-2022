@@ -69,8 +69,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    val age1: Int
-    age1 = if (age >= 100) age - 100 else age
+    val age1 = if (age >= 100) age - 100 else age
     return when {
         age1 % 10 == 1 && (age1 < 10 || age1 > 20) -> "$age год"
         (age1 >= 10 && age1 <= 20) || age1 % 10 == 0 || age1 % 10 >= 5 -> "$age лет"
@@ -113,14 +112,14 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    var A = (kingX != rookX1 && kingY != rookY1)
-    var A1 = (kingX == rookX1 || kingY == rookY1)
-    var B = (kingX == rookX2 || kingY == rookY2)
-    var B1 = (kingX != rookX2 && kingY != rookY2)
+    var a = kingX != rookX1 && kingY != rookY1
+    var a1 = kingX == rookX1 || kingY == rookY1
+    var b = kingX == rookX2 || kingY == rookY2
+    var b1 = kingX != rookX2 && kingY != rookY2
     return when {
-        A && B1 -> 0
-        A1 && B -> 3
-        A && B -> 2
+        a && b1 -> 0
+        a1 && b -> 3
+        a && b -> 2
         else -> 1
     }
 }
@@ -141,14 +140,14 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    var A = (kingX == rookX || kingY == rookY)
-    var A1 = (kingX != rookX && kingY != rookY)
-    var B = (kingX - kingY == bishopX - bishopY || kingX + kingY == bishopX + bishopY)
-    var B1 = (kingX - kingY != bishopX - bishopY && kingX + kingY != bishopX + bishopY)
+    var a = kingX == rookX || kingY == rookY
+    var a1 = kingX != rookX && kingY != rookY
+    var b = kingX - kingY == bishopX - bishopY || kingX + kingY == bishopX + bishopY
+    var b1 = kingX - kingY != bishopX - bishopY && kingX + kingY != bishopX + bishopY
     return when {
-        A && B1 -> 1
-        A1 && B -> 2
-        A && B -> 3
+        a && b1 -> 1
+        a1 && b -> 2
+        a && b -> 3
         else -> 0
     }
 }
