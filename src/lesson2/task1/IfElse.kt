@@ -70,12 +70,8 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String {
     val age1: Int
-    if (age >= 100)
-        age1 = age - 100
-    else
-        age1 = age
+    age1 = if (age >= 100) age - 100 else age
     return when {
-
         age1 % 10 == 1 && (age1 < 10 || age1 > 20) -> "$age год"
         (age1 >= 10 && age1 <= 20) || age1 % 10 == 0 || age1 % 10 >= 5 -> "$age лет"
         else -> "$age года"
@@ -116,12 +112,18 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = when {
-        kingX != rookX1 && kingY != rookY1 && kingX != rookX2 && kingY != rookY2 -> 0
-        (kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2) -> 3
-        (kingX != rookX1 && kingY != rookY1) && (kingX == rookX2 || kingY == rookY2) -> 2
+): Int {
+    var A = (kingX != rookX1 && kingY != rookY1)
+    var A1 = (kingX == rookX1 || kingY == rookY1)
+    var B = (kingX == rookX2 || kingY == rookY2)
+    var B1 = (kingX != rookX2 && kingY != rookY2)
+    return when {
+        A && B1 -> 0
+        A1 && B -> 3
+        A && B -> 2
         else -> 1
     }
+}
 
 
 /**
@@ -138,13 +140,18 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int =
-    when {
-        (kingX == rookX || kingY == rookY) && (kingX - kingY != bishopX - bishopY && kingX + kingY != bishopX + bishopY) -> 1
-        (kingX != rookX && kingY != rookY) && (kingX - kingY == bishopX - bishopY || kingX + kingY == bishopX + bishopY) -> 2
-        (kingX == rookX || kingY == rookY) && (kingX - kingY == bishopX - bishopY || kingX + kingY == bishopX + bishopY) -> 3
+): Int {
+    var A = (kingX == rookX || kingY == rookY)
+    var A1 = (kingX != rookX && kingY != rookY)
+    var B = (kingX - kingY == bishopX - bishopY || kingX + kingY == bishopX + bishopY)
+    var B1 = (kingX - kingY != bishopX - bishopY && kingX + kingY != bishopX + bishopY)
+    return when {
+        A && B1 -> 1
+        A1 && B -> 2
+        A && B -> 3
         else -> 0
     }
+}
 
 /**
  * Простая (2 балла)
@@ -165,17 +172,17 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (b >= c && a <= d)
+    return if (b >= c && a <= d)
         if (a <= c)
             if (b >= d)
-                return d - c
+                d - c
             else
-                return b - c
+                b - c
         else
             if (d < b)
-                return d - a
+                d - a
             else
-                return b - a
+                b - a
     else
-        return -1
+        -1
 }

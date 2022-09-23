@@ -122,11 +122,12 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    for (i in n - 1 downTo (sqrt(n.toDouble())).toInt()) {
+    /*for (i in n - 1 downTo (sqrt(n.toDouble())).toInt()) {
         if (n % i == 0)
             return i
     }
-    return 1
+    return 1*/
+    return n / minDivisor(n)
 }
 
 /**
@@ -149,13 +150,12 @@ fun collatzSteps(x: Int): Int {
     var a = x
     var count = 0
     while (a != 1) {
-        if (a % 2 == 0) {
-            a /= 2
-            count++
+        a = if (a % 2 == 0) {
+            a / 2
         } else {
-            a = 3 * a + 1
-            count++
+            3 * a + 1
         }
+        count++
     }
     return count
 }
@@ -275,14 +275,14 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var count = n - 2
     var a3 = 1
-    var a2=1
-    var a = a2+a3
-    if (n==1 || n==2) return 1
+    var a2 = 1
+    var a = a2 + a3
+    if (n == 1 || n == 2) return 1
     while (count - digitNumber(a) > 0) {
         count -= digitNumber(a)
-        a3=a2
-        a2=a
-        a= a2+a3
+        a3 = a2
+        a2 = a
+        a = a2 + a3
     }
     return (a / 10.0.pow(digitNumber(a) - count) % 10).toInt()
 }
