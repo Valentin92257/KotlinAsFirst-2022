@@ -266,40 +266,7 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int {
-    var count = 3
-    var f1: Int
-    var f2 = 1
-    var f3 = 2
-    var f4: Int
-    var c2: Int
-    if (n == 1 || n == 2) return 1
-    if (n == 3) return 2
-    while (count <= n) {
-        f1 = f2
-        f2 = f3
-        f3 = f1 + f2
-        f4 = f3
-        when {
-            f3 / 1000 > 0 -> c2 = 4
-            f3 / 100 > 0 && f3 / 1000 <= 0 -> c2 = 3
-            f3 / 10 > 0 && f3 / 100 <= 0 -> c2 = 2
-            else -> c2 = 1
-        }
-        if (n - count - c2 <= 0) {
-            return when {
-                (n - count - c2) == 0 -> f4 % 10
-                (n - count - c2) == -1 -> (f4 % 100) / 10
-                (n - count - c2) == -2 -> (f4 % 1000) / 100
-                else -> (f4 / 1000)
-            }
-        } else {
-            count += c2
-        }
-    }
-    return(0)
-}
-
+fun fibSequenceDigit(n: Int): Int = TODO()
 
 
 
