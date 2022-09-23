@@ -2,10 +2,8 @@
 
 package lesson3.task1
 
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.sqrt
+import kotlin.math.*
+
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -255,7 +253,15 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var count = n
+    var a = 1
+    while (count - digitNumber(a.toDouble().pow(2).toInt()) > 0) {
+        count -= digitNumber((a.toDouble().pow(2)).toInt())
+        a++
+    }
+    return (a.toDouble().pow(2) / 10.0.pow(digitNumber(a.toDouble().pow(2).toInt()) - count) % 10).toInt()
+}
 
 /**
  * Сложная (5 баллов)
@@ -266,7 +272,20 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var count = n - 2
+    var a3 = 1
+    var a2=1
+    var a = a2+a3
+    if (n==1 || n==2) return 1
+    while (count - digitNumber(a) > 0) {
+        count -= digitNumber(a)
+        a3=a2
+        a2=a
+        a= a2+a3
+    }
+    return (a / 10.0.pow(digitNumber(a) - count) % 10).toInt()
+}
 
 
 
