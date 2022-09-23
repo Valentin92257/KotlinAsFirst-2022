@@ -249,8 +249,10 @@ fun cos(x: Double, eps: Double): Double = TODO()
 fun squareSequenceDigit(n: Int): Int {
     var count = n
     var a = 1
-    while (count - digitNumber(a.toDouble().pow(2).toInt()) > 0) {
-        count -= digitNumber((a.toDouble().pow(2)).toInt())
+    var b = 1
+    while (count - b > 0) {
+        b=digitNumber(a.toDouble().pow(2).toInt())
+        count -= b
         a++
     }
     return (a.toDouble().pow(2) / 10.0.pow(digitNumber(a.toDouble().pow(2).toInt()) - count) % 10).toInt()
