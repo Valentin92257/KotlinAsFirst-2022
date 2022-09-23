@@ -2,7 +2,9 @@
 
 package lesson3.task1
 
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 
 // Урок 3: циклы
@@ -162,15 +164,14 @@ fun collatzSteps(x: Int): Int {
 fun lcm(m: Int, n: Int): Int {
     var a = m
     var b = n
-    while(a != 0 && b != 0){
-        if(a > b){
-            a%=b
-        }
-        else{
-            b%=a
+    while (a != 0 && b != 0) {
+        if (a > b) {
+            a %= b
+        } else {
+            b %= a
         }
     }
-    return m*n/(a+b)
+    return m * n / (a + b)
 }
 
 
@@ -182,7 +183,7 @@ fun lcm(m: Int, n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean =
-    m*n/lcm(m,n) == 1
+    m * n / lcm(m, n) == 1
 
 
 /**
@@ -252,7 +253,7 @@ fun squareSequenceDigit(n: Int): Int {
     var a = 1
     var b = 1
     while (count - b > 0) {
-        b=digitNumber(a.toDouble().pow(2).toInt())
+        b = digitNumber(a.toDouble().pow(2).toInt())
         count -= b
         a++
     }
