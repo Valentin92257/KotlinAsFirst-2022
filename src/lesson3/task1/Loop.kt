@@ -195,11 +195,11 @@ fun isCoPrime(m: Int, n: Int): Boolean =
  */
 fun revert(n: Int): Int {
     var count = 1
-    var a=n
+    var a = n
     var b = 0
-    while (a / 10 > 0){
-        b= b * 10 + a % 10
-        a/=10
+    while (a / 10 > 0) {
+        b = b * 10 + a % 10
+        a /= 10
     }
     return b * 10 + a
 }
@@ -214,7 +214,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = n==revert(n)
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя (3 балла)
@@ -228,11 +228,11 @@ fun hasDifferentDigits(n: Int): Boolean {
     var a1 = n
     var a = n
     var a2 = n
-    while(a / 10 > 0){
+    while (a / 10 > 0) {
         a1 = a % 10
-        a/=10
+        a /= 10
         a2 = a % 10
-        if(a2 != a1) return true
+        if (a2 != a1) return true
     }
     return a2 != a
 }

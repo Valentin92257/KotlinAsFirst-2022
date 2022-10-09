@@ -121,14 +121,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double {
-    var summa = 0.0
-    for (i in v) {
-        summa += i.pow(2)
-    }
-    return (sqrt(summa))
-
-}
+fun abs(v: List<Double>): Double = sqrt(v.map { it * it }.sum())
 
 /**
  * Простая (2 балла)
@@ -136,9 +129,10 @@ fun abs(v: List<Double>): Double {
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double =
-    when {
-        list.size > 0 -> list.sum() / list.size.toDouble()
-        else -> 0.0
+    if (list.size > 0) {
+        list.sum() / list.size.toDouble()
+    } else {
+        0.0
     }
 
 
@@ -155,7 +149,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
     for (i in 0 until list.size) {
         list[i] = list[i] - a
     }
-    return (list)
+    return list
 }
 
 /**
@@ -213,7 +207,17 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    var list = mutableListOf<Int>()
+    var a = n
+    for (d in 2..n) {
+        while (a % d == 0) {
+            list.add(d)
+            a /= d
+        }
+    }
+    return list
+}
 
 /**
  * Сложная (4 балла)
@@ -222,7 +226,7 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя (3 балла)
