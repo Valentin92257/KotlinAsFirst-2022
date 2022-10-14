@@ -246,7 +246,20 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    var a = mutableListOf<Char>()
+    var b = convert(n, base)
+    var c = ""
+    for (i in 'a'..'z') a.add(i)
+    for (i in 0 until b.size) {
+        if (b[i] >= 10) {
+            c += a[b[i] - 10]
+        } else {
+            c += b[i].toString()
+        }
+    }
+    return c
+}
 
 /**
  * Средняя (3 балла)
@@ -255,7 +268,9 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int =
+    digits.mapIndexed { index, i -> i * base.toDouble().pow(digits.size - 1 - index).toInt() }.sum()
+
 
 /**
  * Сложная (4 балла)
@@ -269,7 +284,22 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    var a = mutableListOf<Char>()
+    var chisla = mutableListOf<Char>()
+    var b = mutableListOf<Int>()
+    str.toMutableList()
+    for (i in 'a'..'z') a.add(i)
+    for (i in '0'..'9') chisla.add(i)
+    for (i in 0..str.indexOf(str.last())) {
+        if (str[i] > '9') {
+            b.add(a.indexOf(str[i]) + 10)
+        } else {
+            b.add(chisla.indexOf(str[i]))
+        }
+    }
+    return decimal(b, base)
+}
 
 /**
  * Сложная (5 баллов)
@@ -279,7 +309,21 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val chislar = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val chislan = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    var r = ""
+    var a = n
+    var i = 0
+    while (a > 0) {
+        while (a - chislan[i] >= 0) {
+            r += chislar[i]
+            a -= chislan[i]
+        }
+        i++
+    }
+    return r
+}
 
 /**
  * Очень сложная (7 баллов)
@@ -288,4 +332,44 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val sotni = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    val des = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+    val edin = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val edskl = listOf("", "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи", "пять тысяч", "шесть тысяч", "семь тысяч", "восемь тысяч", "девять тысяч")
+    val otdes = listOf("","одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать","восемнадцать", "девятнадцать")
+    var a = listOf<Int>()
+    var b = listOf<Int>()
+    var c = ""
+    if(n >= 1000){
+        a = convert(n / 1000, 10)
+        b = convert(n % 1000,10)
+    }
+    else{
+        b = convert(n,10)
+    }
+    if(n >= 1000) {when{
+        a.size == 3 && (a[1] * 10 + a[2] <= 10 || a[1] * 10 + a[2] > 19) && a[2] != 0 -> c = c + sotni[a[0]] + " " + des[a[1]] + " " + edskl[a[2]]
+        a.size == 3 && a[1] * 10 + a[2] > 10 && a[1] * 10 + a[2] <= 19 -> c = c + sotni[ a[0]] + " " + otdes[a[2]] + " тысяч"
+        a.size == 3 && a[2] == 0-> c = c + sotni[ a[0]] + " " + des[a[1]] + " тысяч"
+
+        a.size == 2 && (a[0] * 10 + a[1] <= 10 || a[0] * 10 + a[1] > 19) && a[1] != 0 -> c = c + des[a[0]] + " " + edskl[a[1]]
+        a.size == 2 && a[0] * 10 + a[1] > 10 && a[0] * 10 + a[1] <= 19 && a[1] != 0 -> c = c + otdes[a[1]] + " тысяч"
+        a.size == 2 && a[1] == 0-> c = c + des[a[0]] + " тысяч"
+
+        a.size == 1 -> c = c + edskl[a[0]]
+    }}
+    if(n % 1000 > 0 && n / 1000 > 0) c+=" "
+    when{
+        b.size == 3 && (b[1] * 10 + b[2] <= 10 || b[1] * 10 + b[2] > 19) && b[2] != 0 -> c = c + sotni[b[0]] + " " + des[b[1]] + " " + edin[b[2]]
+        b.size == 3 && b[1] * 10 + b[2] > 10 && b[1] * 10 + b[2] <= 19 && b[2] != 0-> c = c + sotni[ b[0]] + " " + otdes[b[2]]
+        b.size == 3 && b[2] == 0-> c = c + sotni[ b[0] ] + " " + des[b[1]]
+
+        b.size == 2 && (b[0] * 10 + b[1] <= 10 || b[0] * 10 + b[1] > 19) && b[1] != 0 -> c = c + des[b[0]] + " " + edin[b[1]]
+        b.size == 2 && b[0] * 10 + b[1] > 10 && b[0] * 10 + b[1] <= 19 -> c = c + otdes[b[1]]
+        b.size == 2 && b[1] == 0-> c = c + des[b[0]]
+
+        b.size == 1 -> c = c + edin[b[0]]
+    }
+    return c.replace("  "," ")
+}
