@@ -16,16 +16,15 @@ import kotlin.math.sqrt
  *
  * Найти все корни уравнения x^2 = y
  */
-fun sqRoots(y: Double) =
-    when {
-        y < 0 -> listOf()
-        y == 0.0 -> listOf(0.0)
-        else -> {
-            val root = sqrt(y)
-            // Результат!
-            listOf(-root, root)
-        }
+fun sqRoots(y: Double) = when {
+    y < 0 -> listOf()
+    y == 0.0 -> listOf(0.0)
+    else -> {
+        val root = sqrt(y)
+        // Результат!
+        listOf(-root, root)
     }
+}
 
 /**
  * Пример
@@ -128,12 +127,11 @@ fun abs(v: List<Double>): Double = sqrt(v.map { it * it }.sum())
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double =
-    if (list.size > 0) {
-        list.sum() / list.size.toDouble()
-    } else {
-        0.0
-    }
+fun mean(list: List<Double>): Double = if (list.size > 0) {
+    list.sum() / list.size.toDouble()
+} else {
+    0.0
+}
 
 
 /**
@@ -197,7 +195,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    var list = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     var a = n
     for (d in 2..n) {
         while (a % d == 0) {
@@ -247,18 +245,21 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    var a = mutableListOf<Char>()
-    var b = convert(n, base)
-    var c = ""
-    for (i in 'a'..'z') a.add(i)
-    for (i in 0 until b.size) {
-        if (b[i] >= 10) {
-            c += a[b[i] - 10]
-        } else {
-            c += b[i].toString()
+    val a = buildString {
+        for (letter in 'a'..'z')
+            append(letter)
+    }
+    val b = convert(n, base)
+    return buildString {
+        for (i in 0 until b.size) {
+            if (b[i] >= 10) {
+                append(a[b[i] - 10])
+            } else {
+                append(b[i].toString())
+            }
         }
     }
-    return c
+
 }
 
 /**
@@ -285,17 +286,17 @@ fun decimal(digits: List<Int>, base: Int): Int =
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var a = mutableListOf<Char>()
-    var chisla = mutableListOf<Char>()
-    var b = mutableListOf<Int>()
+    val a = mutableListOf<Char>()
+    val numbers = mutableListOf<Char>()
+    val b = mutableListOf<Int>()
     val s = str.toMutableList()
     for (i in 'a'..'z') a.add(i)
-    for (i in '0'..'9') chisla.add(i)
+    for (i in '0'..'9') numbers.add(i)
     for (i in s) {
         if (i > '9') {
             b.add(a.indexOf(i) + 10)
         } else {
-            b.add(chisla.indexOf(i))
+            b.add(numbers.indexOf(i))
         }
     }
     return decimal(b, base)
@@ -310,15 +311,15 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    val chislar = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
-    val chislan = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    val numbersr = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val numbersn = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
     var r = ""
     var a = n
     var i = 0
     while (a > 0) {
-        while (a - chislan[i] >= 0) {
-            r += chislar[i]
-            a -= chislan[i]
+        while (a - numbersn[i] >= 0) {
+            r += numbersr[i]
+            a -= numbersn[i]
         }
         i++
     }
@@ -333,9 +334,9 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    val sotni =
+    val hundres =
         listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
-    val des = listOf(
+    val dozens = listOf(
         "",
         "десять",
         "двадцать",
@@ -347,8 +348,8 @@ fun russian(n: Int): String {
         "восемьдесят",
         "девяносто"
     )
-    val edin = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
-    val edskl = listOf(
+    val units = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val units1 = listOf(
         "",
         "одна тысяча",
         "две тысячи",
@@ -360,7 +361,7 @@ fun russian(n: Int): String {
         "восемь тысяч",
         "девять тысяч"
     )
-    val otdes = listOf(
+    val dozens1 = listOf(
         "",
         "одиннадцать",
         "двенадцать",
@@ -374,51 +375,57 @@ fun russian(n: Int): String {
     )
     var a = listOf<Int>()
     var b = listOf<Int>()
-    var c = ""
-    if (n >= 1000) {
-        a = convert(n / 1000, 10)
-        b = convert(n % 1000, 10)
-    } else {
-        b = convert(n, 10)
-    }
-    if (n >= 1000) {
-        when {
-            a.size == 3 && (a[1] * 10 + a[2] <= 10 || a[1] * 10 + a[2] > 19) && a[2] != 0 -> c =
-                c + sotni[a[0]] + " " + des[a[1]] + " " + edskl[a[2]]
-
-            a.size == 3 && a[1] * 10 + a[2] > 10 && a[1] * 10 + a[2] <= 19 -> c =
-                c + sotni[a[0]] + " " + otdes[a[2]] + " тысяч"
-
-            a.size == 3 && a[2] == 0 -> c = c + sotni[a[0]] + " " + des[a[1]] + " тысяч"
-
-            a.size == 2 && (a[0] * 10 + a[1] <= 10 || a[0] * 10 + a[1] > 19) && a[1] != 0 -> c =
-                c + des[a[0]] + " " + edskl[a[1]]
-
-            a.size == 2 && a[0] * 10 + a[1] > 10 && a[0] * 10 + a[1] <= 19 && a[1] != 0 -> c =
-                c + otdes[a[1]] + " тысяч"
-
-            a.size == 2 && a[1] == 0 -> c = c + des[a[0]] + " тысяч"
-
-            a.size == 1 -> c = c + edskl[a[0]]
+    var c = buildString {
+        if (n >= 1000) {
+            a = convert(n / 1000, 10)
+            b = convert(n % 1000, 10)
+        } else {
+            b = convert(n, 10)
         }
-    }
-    if (n % 1000 > 0 && n / 1000 > 0) c += " "
-    when {
-        b.size == 3 && (b[1] * 10 + b[2] <= 10 || b[1] * 10 + b[2] > 19) && b[2] != 0 -> c =
-            c + sotni[b[0]] + " " + des[b[1]] + " " + edin[b[2]]
+        if (n >= 1000) {
+            append(
+                when {
+                    a.size == 3 && (a[1] * 10 + a[2] <= 10 || a[1] * 10 + a[2] > 19) && a[2] != 0 ->
+                        hundres[a[0]] + " " + dozens[a[1]] + " " + units1[a[2]]
 
-        b.size == 3 && b[1] * 10 + b[2] > 10 && b[1] * 10 + b[2] <= 19 && b[2] != 0 -> c =
-            c + sotni[b[0]] + " " + otdes[b[2]]
+                    a.size == 3 && a[1] * 10 + a[2] > 10 && a[1] * 10 + a[2] <= 19 -> hundres[a[0]] + " " + dozens1[a[2]] + " тысяч"
 
-        b.size == 3 && b[2] == 0 -> c = c + sotni[b[0]] + " " + des[b[1]]
+                    a.size == 3 && a[2] == 0 -> hundres[a[0]] + " " + dozens[a[1]] + " тысяч"
 
-        b.size == 2 && (b[0] * 10 + b[1] <= 10 || b[0] * 10 + b[1] > 19) && b[1] != 0 -> c =
-            c + des[b[0]] + " " + edin[b[1]]
+                    a.size == 2 && (a[0] * 10 + a[1] <= 10 || a[0] * 10 + a[1] > 19) && a[1] != 0 ->
+                        dozens[a[0]] + " " + units1[a[1]]
 
-        b.size == 2 && b[0] * 10 + b[1] > 10 && b[0] * 10 + b[1] <= 19 -> c = c + otdes[b[1]]
-        b.size == 2 && b[1] == 0 -> c = c + des[b[0]]
+                    a.size == 2 && a[0] * 10 + a[1] > 10 && a[0] * 10 + a[1] <= 19 && a[1] != 0 -> dozens1[a[1]] + " тысяч"
 
-        b.size == 1 -> c = c + edin[b[0]]
+                    a.size == 2 && a[1] == 0 -> dozens[a[0]] + " тысяч"
+
+                    a.size == 1 -> units1[a[0]]
+
+                    else -> ""
+                }
+            )
+        }
+        if (n % 1000 > 0 && n / 1000 > 0) append(" ")
+        append(
+            when {
+                b.size == 3 && (b[1] * 10 + b[2] <= 10 || b[1] * 10 + b[2] > 19) && b[2] != 0 ->
+                    hundres[b[0]] + " " + dozens[b[1]] + " " + units[b[2]]
+
+                b.size == 3 && b[1] * 10 + b[2] > 10 && b[1] * 10 + b[2] <= 19 && b[2] != 0 -> hundres[b[0]] + " " + dozens1[b[2]]
+
+                b.size == 3 && b[2] == 0 -> hundres[b[0]] + " " + dozens[b[1]]
+
+                b.size == 2 && (b[0] * 10 + b[1] <= 10 || b[0] * 10 + b[1] > 19) && b[1] != 0 -> dozens[b[0]] + " " + units[b[1]]
+
+                b.size == 2 && b[0] * 10 + b[1] > 10 && b[0] * 10 + b[1] <= 19 -> dozens1[b[1]]
+
+                b.size == 2 && b[1] == 0 -> dozens[b[0]]
+
+                b.size == 1 -> units[b[0]]
+
+                else -> ""
+            }
+        )
     }
     return c.replace("  ", " ")
 }
