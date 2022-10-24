@@ -226,11 +226,11 @@ fun convert(n: Int, base: Int): List<Int> {
     val a = mutableListOf<Int>()
     var n1 = n
     while (n1 / base > 0) {
-        a.add(0, n1 % base)
+        a.add(n1 % base)
         n1 /= base
     }
-    a.add(0, n1 % base)
-    return a
+    a.add(n1 % base)
+    return a.reversed()
 }
 
 /**
@@ -244,23 +244,18 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String {
+fun IntToChar(n: Int): Char {
     val a = buildString {
+        for (letter in '0'..'9')
+            append(letter)
         for (letter in 'a'..'z')
             append(letter)
     }
-    val b = convert(n, base)
-    return buildString {
-        for (i in 0 until b.size) {
-            if (b[i] >= 10) {
-                append(a[b[i] - 10])
-            } else {
-                append(b[i].toString())
-            }
-        }
-    }
-
+    return a[n]
 }
+
+fun convertToString(n: Int, base: Int): String = convert(n, base).joinToString(separator = "") { IntToChar(it).toString() }
+
 
 /**
  * Средняя (3 балла)
@@ -285,22 +280,17 @@ fun decimal(digits: List<Int>, base: Int): Int =
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int {
-    val a = mutableListOf<Char>()
-    val numbers = mutableListOf<Char>()
-    val b = mutableListOf<Int>()
-    val s = str.toMutableList()
-    for (i in 'a'..'z') a.add(i)
-    for (i in '0'..'9') numbers.add(i)
-    for (i in s) {
-        if (i > '9') {
-            b.add(a.indexOf(i) + 10)
-        } else {
-            b.add(numbers.indexOf(i))
-        }
+fun charToInt(str: Char): Int{
+    val a = buildString {
+        for (letter in '0'..'9')
+            append(letter)
+        for (letter in 'a'..'z')
+            append(letter)
     }
-    return decimal(b, base)
+    return a.indexOf(str)
 }
+fun decimalFromString(str: String, base: Int): Int = decimal(str.map { charToInt(it) }, base)
+
 
 /**
  * Сложная (5 баллов)
