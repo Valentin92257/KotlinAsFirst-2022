@@ -327,6 +327,7 @@ fun russian(n: Int): String {
     val hundres =
         listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
     val dozens = listOf(
+
         "",
         "десять",
         "двадцать",
@@ -365,7 +366,7 @@ fun russian(n: Int): String {
     )
     var a = listOf<Int>()
     var b = listOf<Int>()
-    var c = buildString {
+    val c = buildString {
         if (n >= 1000) {
             a = convert(n / 1000, 10)
             b = convert(n % 1000, 10)
@@ -417,5 +418,5 @@ fun russian(n: Int): String {
             }
         )
     }
-    return c.replace("  ", " ")
+    return c.replace("  ", " ").trim()
 }
