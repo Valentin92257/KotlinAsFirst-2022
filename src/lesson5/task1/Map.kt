@@ -2,9 +2,7 @@
 
 package lesson5.task1
 
-import kotlin.math.max
 import kotlin.math.min
-import kotlin.time.Duration.Companion.seconds
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -185,7 +183,6 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
     val mapC = (mapB + mapA).toMutableMap()
-    val keys = String
     for ((key1, value1) in mapA) {
         for ((key2, value2) in mapB) {
             if (key1 == key2 && value1 != value2) mapC[key1] = "$value1, $value2"
@@ -368,8 +365,8 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
 data class tc(var name: String, var k: Double)
 
 fun ToCoefficient(treasures: Map<String, Pair<Int, Int>>): List<Pair<String, Double>> {
-    var b1 = 0
-    var b2 = 0
+    var b1: Int
+    var b2: Int
     val list1 = mutableListOf<Pair<String, Double>>()
     val list = mutableListOf<tc>()
     for ((a, b) in treasures) {
@@ -387,14 +384,23 @@ fun ToCoefficient(treasures: Map<String, Pair<Int, Int>>): List<Pair<String, Dou
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     val list1 = ToCoefficient(treasures)
     var num = capacity
+    var num1: Int
     val fin = mutableSetOf<String>()
-    var b = 0
-    for ((a, _) in list1) {
+    var b1 = Pair("",0.0)
+    for ((a, b) in list1) {
         if (num - (treasures[a]?.first ?: 0) >= 0) {
             fin.add(a)
             num -= (treasures[a]?.first ?: 0)
+            b1 = Pair(a, b)
         }
     }
-
+    num1 = num + (treasures[b1.first]?.first ?: 0)
+    for ((a, b) in list1) {
+        if (num - (treasures[a]?.first ?: 0) >= 0 && !fin.contains(a)) {
+            num1 = min(num1, num - (treasures[a]?.first ?: 0))
+            fin.remove(b1.first)
+            b1 = Pair(a, b)
+        }
+    }
     return fin.toList().reversed().toMutableSet()
 }
