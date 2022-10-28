@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import kotlin.math.max
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -99,7 +101,9 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val students = mutableListOf<String>()
     val c = mutableMapOf<Int, List<String>>()
-    for (i in 5 downTo 0) {
+    val maxv = -1
+    for((i,b) in grades) maxv= max(maxv,b)
+    for (i in maxv downTo 0) {
         for ((student, grade) in grades) {
             if (i == grade) students.add(student)
         }
