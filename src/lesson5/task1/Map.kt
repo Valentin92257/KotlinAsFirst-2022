@@ -103,7 +103,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val students = mutableListOf<String>()
     val c = mutableMapOf<Int, List<String>>()
     var maxv = -1
-    var minv = 1000000
+    var minv = 1000000000
     for ((_, b) in grades) {
         maxv = max(maxv, b)
         minv = min(minv, b)
