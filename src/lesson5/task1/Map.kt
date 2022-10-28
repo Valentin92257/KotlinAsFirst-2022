@@ -4,6 +4,7 @@ package lesson5.task1
 
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.time.Duration.Companion.seconds
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -102,13 +103,11 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val students = mutableListOf<String>()
     val c = mutableMapOf<Int, List<String>>()
-    var maxv = -1
-    var minv = 1000000000
+    val maxmin = mutableListOf<Int>()
     for ((_, b) in grades) {
-        maxv = max(maxv, b)
-        minv = min(minv, b)
+        maxmin.add(b)
     }
-    for (i in maxv downTo minv) {
+    for (i in maxmin.max() downTo maxmin.min()) {
         for ((student, grade) in grades) {
             if (i == grade) students.add(student)
         }
@@ -397,18 +396,20 @@ fun ToCoefficient(treasures: Map<String, Pair<Int, Int>>): List<Pair<String, Dou
     for (i in list) {
         list1.add(i.name to i.k)
     }
-    return list1
+    return list1.reversed()
 }
 
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     val list1 = ToCoefficient(treasures)
     var num = capacity
     val fin = mutableSetOf<String>()
+    var b = 0
     for ((a, _) in list1) {
         if (num - (treasures[a]?.first ?: 0) >= 0) {
             fin.add(a)
             num -= (treasures[a]?.first ?: 0)
         }
+        b =
     }
     return fin
 }
