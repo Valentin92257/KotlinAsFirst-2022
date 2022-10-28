@@ -409,7 +409,6 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
             fin.add(a)
             num -= (treasures[a]?.first ?: 0)
         }
-        b =
     }
     return fin
 }
