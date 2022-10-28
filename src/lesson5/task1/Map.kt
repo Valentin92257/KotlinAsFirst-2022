@@ -395,6 +395,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         }
     }
     num1 = num + (treasures[b1.first]?.first ?: 0)
+    fin.remove(b1.first)
     for ((a, b) in list1) {
         if (num1 - (treasures[a]?.first ?: 0) >= 0 && !fin.contains(a)) {
             num1 = min(num1, num - (treasures[a]?.first ?: 0))
