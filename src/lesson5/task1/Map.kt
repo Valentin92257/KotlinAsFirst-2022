@@ -101,7 +101,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val students = mutableListOf<String>()
     val c = mutableMapOf<Int, List<String>>()
-    val maxv = -1
+    var maxv = -1
     for((i,b) in grades) maxv= max(maxv,b)
     for (i in maxv downTo 0) {
         for ((student, grade) in grades) {
