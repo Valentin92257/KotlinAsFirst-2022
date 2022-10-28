@@ -99,7 +99,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val students = mutableListOf<String>()
     val c = mutableMapOf<Int, List<String>>()
-    for (i in 5 downTo 2) {
+    for (i in 5 downTo 0) {
         for ((student, grade) in grades) {
             if (i == grade) students.add(student)
         }
