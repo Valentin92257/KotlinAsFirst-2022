@@ -114,7 +114,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
         if (students.isNotEmpty()) c[i] = students.toList()
         students.clear()
     }
-    return c
+    if (c == null) return emptyMap() else return c
 }
 
 
@@ -396,7 +396,7 @@ fun ToCoefficient(treasures: Map<String, Pair<Int, Int>>): List<Pair<String, Dou
     for (i in list) {
         list1.add(i.name to i.k)
     }
-    return list1.reversed()
+    return list1
 }
 
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
@@ -410,5 +410,6 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
             num -= (treasures[a]?.first ?: 0)
         }
     }
-    return fin
+
+    return fin.toList().reversed().toMutableSet()
 }
