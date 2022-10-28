@@ -2,6 +2,7 @@
 
 package lesson5.task1
 
+import kotlin.math.max
 import kotlin.math.min
 
 // Урок 5: ассоциативные массивы и множества
@@ -384,20 +385,27 @@ fun ToCoefficient(treasures: Map<String, Pair<Int, Int>>): List<Pair<String, Dou
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     val list1 = ToCoefficient(treasures)
     var num = capacity
+    var price = 0
+    var price1: Int
     var num1: Int
     val fin = mutableSetOf<String>()
-    var b1 = Pair("",0.0)
+    var b1 = Pair("", 0.0)
     for ((a, b) in list1) {
         if (num - (treasures[a]?.first ?: 0) >= 0) {
             fin.add(a)
             num -= (treasures[a]?.first ?: 0)
             b1 = Pair(a, b)
+            price += (treasures[a]?.second ?: 0)
         }
     }
     num1 = num + (treasures[b1.first]?.first ?: 0)
+    price1 = price - (treasures[b1.first]?.second ?: 0)
     for ((a, b) in list1) {
-        if (num1 - (treasures[a]?.first ?: 0) >= 0 && !fin.contains(a)) {
-            num1 = min(num1, num - (treasures[a]?.first ?: 0))
+        if (num1 - (treasures[a]?.first ?: 0) >= 0 && !fin.contains(a) && price1 + (treasures[a]?.second
+                ?: 0) >= price
+        ) {
+            num1 = min(num1, num + (treasures[b1.first]?.first ?: 0) - (treasures[a]?.first ?: 0))
+            price1 = max(price1, price - (treasures[b1.first]?.second ?: 0) + (treasures[a]?.second ?: 0))
             fin.remove(b1.first)
             fin.add(a)
             b1 = Pair(a, b)
