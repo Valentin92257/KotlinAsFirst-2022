@@ -3,6 +3,7 @@
 package lesson5.task1
 
 import kotlin.math.max
+import kotlin.math.min
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -102,8 +103,12 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val students = mutableListOf<String>()
     val c = mutableMapOf<Int, List<String>>()
     var maxv = -1
-    for((i,b) in grades) maxv= max(maxv,b)
-    for (i in maxv downTo 0) {
+    var minv = 1000000
+    for ((_, b) in grades) {
+        maxv = max(maxv, b)
+        minv = min(minv, b)
+    }
+    for (i in maxv downTo minv) {
         for ((student, grade) in grades) {
             if (i == grade) students.add(student)
         }
@@ -342,15 +347,14 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    val a = list.toMutableSet()
-    val b = list.sorted()
+    val a = list.toMutableSet().sorted()
     for (i in a) {
         if (a.contains(number - i)) {
             if (number - i == i) {
-                if (b.count { it == i } > 1) {
-                    return Pair(b.indexOf(i), b.lastIndexOf(i))
+                if (list.count { it == i } > 1) {
+                    return Pair(list.indexOf(i), list.lastIndexOf(i))
                 } else continue
-            } else return Pair(b.indexOf(i), b.indexOf(number - i))
+            } else return Pair(list.indexOf(i), list.indexOf(number - i))
         }
     }
     return Pair(-1, -1)
