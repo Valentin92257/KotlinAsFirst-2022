@@ -401,9 +401,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     num1 = num + (treasures[b1.first]?.first ?: 0)
     price1 = price - (treasures[b1.first]?.second ?: 0)
     for ((a, b) in list1) {
-        if (num1 - (treasures[a]?.first ?: 0) >= 0 && !fin.contains(a) && price1 + (treasures[a]?.second
-                ?: 0) >= price
-        ) {
+        if (num1 - (treasures[a]?.first ?: 0) + (treasures[b1.first]?.first ?: 0)>= 0 && !fin.contains(a) && price1 + (treasures[a]?.second ?: 0) - (treasures[b1.first]?.second ?: 0)>= price) {
             num1 = min(num1, num + (treasures[b1.first]?.first ?: 0) - (treasures[a]?.first ?: 0))
             price1 = max(price1, price - (treasures[b1.first]?.second ?: 0) + (treasures[a]?.second ?: 0))
             fin.remove(b1.first)
