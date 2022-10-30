@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import ru.spbstu.wheels.toMutableMap
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -387,7 +389,8 @@ fun IncompleteBackpack(
     val fin = mutableSetOf<String>()
     var num1 = num
     for ((a, b) in list1) {
-        if (num - (treasures[a]?.first ?: 0) >= 0) {
+        if (num1 - (treasures[a]!!.first) >= 0) {
+
             fin.add(a)
             num1 -= (treasures[a]?.first ?: 0)
             //b1 = Pair(a, b)
@@ -418,7 +421,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     bag += list.getValue(a1).first
     list.remove(a1)
     fin.remove(a1)
-    for ((a, b) in treasures) {
+    for ((a, b) in treasures.toList().reversed().toMutableMap()) {
         if (bag - b.first >= 0 && price + b.second >= price1 && !list.containsKey(a)) {
             a1 = a
             price1 = price + b.second
