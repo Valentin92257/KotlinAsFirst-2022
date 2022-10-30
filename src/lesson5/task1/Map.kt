@@ -421,7 +421,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     bag += list.getValue(a1).first
     list.remove(a1)
     fin.remove(a1)
-    for ((a, b) in treasures.toList().reversed().toMutableMap()) {
+    for ((a, b) in treasures) {
         if (bag - b.first >= 0 && price + b.second >= price1 && !list.containsKey(a)) {
             a1 = a
             price1 = price + b.second
