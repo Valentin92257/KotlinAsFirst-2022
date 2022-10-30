@@ -2,9 +2,6 @@
 
 package lesson5.task1
 
-import kotlin.math.max
-import kotlin.math.min
-
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -382,32 +379,50 @@ fun ToCoefficient(treasures: Map<String, Pair<Int, Int>>): List<Pair<String, Dou
     return list1
 }
 
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val list1 = ToCoefficient(treasures)
-    var num = capacity
-    var price = 0
-    var price1: Int
-    var num1: Int
+fun IncompleteBackpack(
+    list1: List<Pair<String, Double>>,
+    treasures: Map<String, Pair<Int, Int>>,
+    num: Int
+): MutableSet<String> {
     val fin = mutableSetOf<String>()
-    var b1 = Pair("", 0.0)
+    var num1 = num
     for ((a, b) in list1) {
         if (num - (treasures[a]?.first ?: 0) >= 0) {
             fin.add(a)
-            num -= (treasures[a]?.first ?: 0)
-            b1 = Pair(a, b)
-            price += (treasures[a]?.second ?: 0)
+            num1 -= (treasures[a]?.first ?: 0)
+            //b1 = Pair(a, b)
+            //price += (treasures[a]?.second ?: 0)
         }
     }
-    /*num1 = num + (treasures[b1.first]?.first ?: 0)
-    price1 = price - (treasures[b1.first]?.second ?: 0)
-    for ((a, b) in list1) {
-        if (num1 - (treasures[a]?.first ?: 0) + (treasures[b1.first]?.first ?: 0)>= 0 && !fin.contains(a) && price1 + (treasures[a]?.second ?: 0) - (treasures[b1.first]?.second ?: 0)>= price) {
-            num1 = min(num1, num + (treasures[b1.first]?.first ?: 0) - (treasures[a]?.first ?: 0))
-            price1 = max(price1, price - (treasures[b1.first]?.second ?: 0) + (treasures[a]?.second ?: 0))
-            fin.remove(b1.first)
-            fin.add(a)
-            b1 = Pair(a, b)
+    return fin
+}
+
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val list1 = ToCoefficient(treasures)
+    val fin = IncompleteBackpack(list1, treasures, capacity)
+    val list = mutableMapOf<String, Pair<Int, Int>>()
+    var price = 0
+    var price1 = 0
+    var a1 = ""
+    var bag = capacity
+    for (a in fin) {
+        list[a] = treasures.getValue(a)
+    }
+    for ((a, b) in list) {
+        price += b.second
+        bag -= b.first
+        a1 = a
+    }
+    if (list.isEmpty()) return emptySet()
+    price -= list.getValue(a1).second
+    bag += list.getValue(a1).first
+    list.remove(a1)
+    for ((a, b) in treasures) {
+        if (bag - b.first >= 0 && price + b.second >= price1 && !list.containsKey(a)) {
+            a1 = a
+            price1 = price + b.second
         }
-    }*/
+    }
+    fin.add(a1)
     return fin.toList().reversed().toMutableSet()
 }
