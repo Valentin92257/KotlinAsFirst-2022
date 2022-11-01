@@ -2,8 +2,6 @@
 
 package lesson5.task1
 
-import ru.spbstu.wheels.toMutableMap
-
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -364,7 +362,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  */
 data class tc(var name: String, var k: Double)
 
-fun ToCoefficient(treasures: Map<String, Pair<Int, Int>>): List<Pair<String, Double>> {
+fun toCoefficient(treasures: Map<String, Pair<Int, Int>>): List<Pair<String, Double>> {
     var b1: Int
     var b2: Int
     val list1 = mutableListOf<Pair<String, Double>>()
@@ -401,7 +399,7 @@ fun IncompleteBackpack(
 }
 
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val list1 = ToCoefficient(treasures)
+    val list1 = toCoefficient(treasures)
     val fin = IncompleteBackpack(list1, treasures, capacity)
     val list = mutableMapOf<String, Pair<Int, Int>>()
     var price = 0

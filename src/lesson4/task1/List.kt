@@ -244,7 +244,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun IntToChar(n: Int): Char {
+fun intToChar(n: Int): Char {
     val a = buildString {
         for (letter in '0'..'9')
             append(letter)
@@ -254,7 +254,8 @@ fun IntToChar(n: Int): Char {
     return a[n]
 }
 
-fun convertToString(n: Int, base: Int): String = convert(n, base).joinToString(separator = "") { IntToChar(it).toString() }
+fun convertToString(n: Int, base: Int): String =
+    convert(n, base).joinToString(separator = "") { intToChar(it).toString() }
 
 
 /**
@@ -280,15 +281,11 @@ fun decimal(digits: List<Int>, base: Int): Int =
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun charToInt(str: Char): Int{
-    val a = buildString {
-        for (letter in '0'..'9')
-            append(letter)
-        for (letter in 'a'..'z')
-            append(letter)
-    }
-    return a.indexOf(str)
+fun charToInt(i: Char): Int = when (i) {
+    in '0'..'9' -> i - '0'
+    else -> i - 'a' + 10
 }
+
 fun decimalFromString(str: String, base: Int): Int = decimal(str.map { charToInt(it) }, base)
 
 
@@ -365,16 +362,16 @@ fun russian(n: Int): String {
         "девятнадцать"
     )
     var a = listOf<Int>()
-    var b = listOf<Int>()
-    val c = buildString {
-        if (n >= 1000) {
-            a = convert(n / 1000, 10)
-            b = convert(n % 1000, 10)
-        } else {
-            b = convert(n, 10)
-        }
-        if (n >= 1000) {
-            append(
+    var b: List<Int>
+    var c = ""
+    if (n >= 1000) {
+        a = convert(n / 1000, 10)
+        b = convert(n % 1000, 10)
+    } else {
+        b = convert(n, 10)
+    }
+    if (n >= 1000) {
+        c += (
                 when {
                     a.size == 3 && (a[1] * 10 + a[2] <= 10 || a[1] * 10 + a[2] > 19) && a[2] != 0 ->
                         hundres[a[0]] + " " + dozens[a[1]] + " " + units1[a[2]]
@@ -394,10 +391,10 @@ fun russian(n: Int): String {
 
                     else -> ""
                 }
-            )
-        }
-        if (n % 1000 > 0 && n / 1000 > 0) append(" ")
-        append(
+                )
+    }
+    if (n % 1000 > 0 && n / 1000 > 0) c += (" ")
+    c += (
             when {
                 b.size == 3 && (b[1] * 10 + b[2] <= 10 || b[1] * 10 + b[2] > 19) && b[2] != 0 ->
                     hundres[b[0]] + " " + dozens[b[1]] + " " + units[b[2]]
@@ -416,7 +413,6 @@ fun russian(n: Int): String {
 
                 else -> ""
             }
-        )
-    }
+            )
     return c.replace("  ", " ").trim()
 }
