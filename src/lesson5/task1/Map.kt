@@ -109,14 +109,9 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    var i = 0
-    for ((key1, value1) in a) {
-        for ((key2, value2) in b) {
-            if (value1 == value2 && key1 == key2) i++
-        }
-    }
-    return i == a.size
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = a.all {
+    b.contains(it.key)
+    b[it.key] == it.value
 }
 
 /**
@@ -134,13 +129,9 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    val delete = mutableListOf<String>()
-    for ((key1, value1) in a) {
-        for ((key2, value2) in b) {
-            if (value1 == value2 && key1 == key2) delete.add(key1)
-        }
+    for ((b1, c) in b) {
+        if (a[b1] == c) a.remove(b1)
     }
-    for (key in delete) a.remove(key)
 }
 
 /**
@@ -150,17 +141,8 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val people2 = mutableListOf<String>()
-    val people1 = mutableSetOf<String>()
-    for (key1 in a) {
-        for (key2 in b) {
-            if (key1 == key2) people1.add(key1)
-        }
-    }
-    for (i in people1) people2.add(i)
-    return people2
-}
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.intersect(b).toList()
+
 
 /**
  * Средняя (3 балла)
@@ -200,20 +182,15 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    val total = mutableListOf<Double>()
-    val a = mutableMapOf<String, Double>()
-    val b = mutableMapOf<String, Double>()
-    for ((share, price) in stockPrices) {
-        a[share] = price
+    val a = stockPrices.groupBy(
+        keySelector = { it.first },
+        valueTransform = { it.second }
+    ).toMutableMap()
+    val c = mutableMapOf<String, Double>()
+    for ((c1, b1) in a) {
+        c[c1] = b1.sum() / b1.size
     }
-    for ((share, _) in a) {
-        for ((share1, price1) in stockPrices) {
-            if (share == share1) total.add(price1)
-        }
-        b[share] = total.sum() / total.size
-        total.clear()
-    }
-    return b
+    return c
 }
 
 /**
@@ -326,14 +303,20 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    val a = list.toMutableSet().sorted()
-    for (i in a) {
-        if (a.contains(number - i)) {
-            if (number - i == i) {
-                if (list.count { it == i } > 1) {
-                    return Pair(list.indexOf(i), list.lastIndexOf(i))
-                } else continue
-            } else return Pair(list.indexOf(i), list.indexOf(number - i))
+    val map = mutableMapOf<Int, Int>()
+    val list1 = list.toMutableList()
+    for (i in list) {
+        map[i] = number - i
+    }
+    for ((a, b) in map) {
+        if (map.contains(b)) {
+            if (a == b) {
+                list1.remove(a)
+                println(list1)
+                if (list1.contains(a)) {
+                    return Pair(list.indexOf(a), list1.indexOf(a) + 1)
+                }
+            } else return Pair(list.indexOf(a), list.indexOf(b))
         }
     }
     return Pair(-1, -1)
@@ -360,71 +343,4 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-data class tc(var name: String, var k: Double)
-
-fun toCoefficient(treasures: Map<String, Pair<Int, Int>>): List<Pair<String, Double>> {
-    var b1: Int
-    var b2: Int
-    val list1 = mutableListOf<Pair<String, Double>>()
-    val list = mutableListOf<tc>()
-    for ((a, b) in treasures) {
-        b1 = b.first
-        b2 = b.second
-        list.add(tc(a, b2.toDouble() / b1.toDouble()))
-        list.sortByDescending { it.k }
-    }
-    for (i in list) {
-        list1.add(i.name to i.k)
-    }
-    return list1
-}
-
-fun IncompleteBackpack(
-    list1: List<Pair<String, Double>>,
-    treasures: Map<String, Pair<Int, Int>>,
-    num: Int
-): MutableSet<String> {
-    val fin = mutableSetOf<String>()
-    var num1 = num
-    for ((a, b) in list1) {
-        if (num1 - (treasures[a]!!.first) >= 0) {
-
-            fin.add(a)
-            num1 -= (treasures[a]?.first ?: 0)
-            //b1 = Pair(a, b)
-            //price += (treasures[a]?.second ?: 0)
-        }
-    }
-    return fin
-}
-
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val list1 = toCoefficient(treasures)
-    val fin = IncompleteBackpack(list1, treasures, capacity)
-    val list = mutableMapOf<String, Pair<Int, Int>>()
-    var price = 0
-    var price1 = 0
-    var a1 = ""
-    var bag = capacity
-    for (a in fin) {
-        list[a] = treasures.getValue(a)
-    }
-    for ((a, b) in list) {
-        price += b.second
-        bag -= b.first
-        a1 = a
-    }
-    if (list.isEmpty()) return emptySet()
-    price -= list.getValue(a1).second
-    bag += list.getValue(a1).first
-    list.remove(a1)
-    fin.remove(a1)
-    for ((a, b) in treasures) {
-        if (bag - b.first >= 0 && price + b.second >= price1 && !list.containsKey(a)) {
-            a1 = a
-            price1 = price + b.second
-        }
-    }
-    fin.add(a1)
-    return fin.toList().reversed().toMutableSet()
-}
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()

@@ -139,7 +139,6 @@ class Tests {
         subtractOf(from, mapOf("a" to "z"))
         assertEquals(mapOf("b" to "c"), from)
     }
-
     @Test
     @Tag("2")
     fun whoAreInBoth() {
@@ -309,7 +308,7 @@ class Tests {
             findSumOfTwo(emptyList(), 1)
         )
         assertEquals(
-            Pair(0, 1),
+            Pair(-1, -1),
             findSumOfTwo(listOf(1, 2, 3), 0)
         )
         assertEquals(
