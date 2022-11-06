@@ -312,7 +312,6 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
         if (map.contains(b)) {
             if (a == b) {
                 list1.remove(a)
-                println(list1)
                 if (list1.contains(a)) {
                     return Pair(list.indexOf(a), list1.indexOf(a) + 1)
                 }
