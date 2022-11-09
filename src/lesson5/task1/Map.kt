@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import lesson4.task1.mean
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -110,7 +112,6 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = a.all {
-    b.contains(it.key)
     b[it.key] == it.value
 }
 
@@ -181,17 +182,12 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    val a = stockPrices.groupBy(
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> =
+    stockPrices.groupBy(
         keySelector = { it.first },
         valueTransform = { it.second }
-    ).toMutableMap()
-    val c = mutableMapOf<String, Double>()
-    for ((c1, b1) in a) {
-        c[c1] = b1.sum() / b1.size
-    }
-    return c
-}
+    ).toMutableMap().mapValues { mean(it.value) }
+
 
 /**
  * Средняя (4 балла)
@@ -304,21 +300,12 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     val map = mutableMapOf<Int, Int>()
-    val list1 = list.toMutableList()
-    for (i in list) {
-        map[i] = number - i
+    val set = list.toSet()
+    for ((index, i) in list.withIndex()) {
+        if (map.containsValue(number - i)) return Pair(set.indexOf(number - i), i)
+        else map[index] = i
     }
-    for ((a, b) in map) {
-        if (map.contains(b)) {
-            if (a == b) {
-                list1.remove(a)
-                if (list1.contains(a)) {
-                    return Pair(list.indexOf(a), list1.indexOf(a) + 1)
-                }
-            } else return Pair(list.indexOf(a), list.indexOf(b))
-        }
-    }
-    return Pair(-1, -1)
+    return (Pair(-1, -1))
 }
 
 /**
