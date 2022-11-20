@@ -125,7 +125,7 @@ fun dateDigitToStr(digital: String): String {
         11 to "ноября",
         12 to "декабря"
     )
-    if (Regex("""^(\d\d|\d).([1-3][0-9]|[0-9]).([0-9]+)$""").containsMatchIn(digital) && month.contains(date[1].toInt()) && date[0].toInt() <= 31) {
+    if (Regex("""^(\d\d|\d).(\d|\d\d).\d+$""").containsMatchIn(digital) && month.contains(date[1].toInt()) && date[0].toInt() <= 31) {
         if (date[1].toInt() != 2 || date[0].toInt() < 29) {
             return String.format("%02d %w %d", date[0].toInt(), month[date[1].toInt()], date[2].toInt())
         }
