@@ -2,6 +2,7 @@
 
 package lesson6.task1
 
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +75,29 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val date = str.split(" ")
+    val month = mutableMapOf(
+        "января" to 1,
+        "февраля" to 2,
+        "марта" to 3,
+        "апреля" to 4,
+        "мая" to 5,
+        "июня" to 6,
+        "июля" to 7,
+        "августа" to 8,
+        "сентября" to 9,
+        "октября" to 10,
+        "ноября" to 11,
+        "декабря" to 12
+    )
+    if (Regex("""^(\d\d|\d) .* ([0-9]+)$""").containsMatchIn(str) && month.contains(date[1]) && date[0].toInt() <= 31) {
+        if (month[date[1]] != 2 || date[0].toInt() < 29) {
+            return String.format("%02d.%02d.%d", date[0].toInt(), month[date[1]], date[2].toInt())
+        }
+    }
+    return ""
+}
 
 /**
  * Средняя (4 балла)
@@ -86,7 +109,29 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val date = digital.split(".")
+    val month = mutableMapOf(
+        1 to "января",
+        2 to "февраля",
+        3 to "марта",
+        4 to "апреля",
+        5 to "мая",
+        6 to "июня",
+        7 to "июля",
+        8 to "августа",
+        9 to "сентября",
+        10 to "октября",
+        11 to "ноября",
+        12 to "декабря"
+    )
+    if (Regex("""^(\d\d|\d).([1-3][0-9]|[0-9]).([0-9]+)$""").containsMatchIn(digital) && month.contains(date[1].toInt()) && date[0].toInt() <= 31) {
+        if (date[1].toInt() != 2 || date[0].toInt() < 29) {
+            return String.format("%02d %w %d", date[0].toInt(), month[date[1].toInt()], date[2].toInt())
+        }
+    }
+    return ""
+}
 
 /**
  * Средняя (4 балла)
@@ -114,7 +159,13 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val str = jumps.split(" ").filter { it.matches(Regex("""\d+""")) }
+    if (("$jumps ").matches(Regex("""(% |- |\d+ )+""")) && str.isNotEmpty()) {
+        return str.maxOf { it.toInt() }
+    }
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
@@ -127,7 +178,15 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val a = jumps.split(" ")
+    var c = -1
+    if ("$jumps ".matches(Regex("""(\d+ [%\-+]+ )+""")))
+        for (i in 0..a.size - 1 step 2) {
+            if (a[i + 1].contains(Regex("""\+"""))) c = maxOf(a[i].toInt(), c)
+        }
+    return c
+}
 
 /**
  * Сложная (6 баллов)

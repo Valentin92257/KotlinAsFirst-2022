@@ -186,7 +186,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     stockPrices.groupBy(
         keySelector = { it.first },
         valueTransform = { it.second }
-    ).toMutableMap().mapValues { mean(it.value) }
+    ).toMap().mapValues { mean(it.value) }
 
 
 /**
