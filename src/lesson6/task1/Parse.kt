@@ -78,7 +78,7 @@ fun main() {
 fun daysInMonth(month: String?, year: Int): Int {
     return when (month) {
         "января" -> 31
-        "февраля" -> if (year % 4 == 0) 29 else 28
+        "февраля" -> if (year % 400 == 0) 29 else if (year % 100 != 0 && year % 4 == 0) 29 else 28
         "марта" -> 31
         "апреля" -> 30
         "мая" -> 31
