@@ -112,22 +112,22 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val date = digital.split(".")
     val month = mutableMapOf(
-        1 to "января",
-        2 to "февраля",
-        3 to "марта",
-        4 to "апреля",
-        5 to "мая",
-        6 to "июня",
-        7 to "июля",
-        8 to "августа",
-        9 to "сентября",
-        10 to "октября",
-        11 to "ноября",
-        12 to "декабря"
+        "01" to "января",
+        "02" to "февраля",
+        "03" to "марта",
+        "04" to "апреля",
+        "05" to "мая",
+        "06" to "июня",
+        "07" to "июля",
+        "08" to "августа",
+        "09" to "сентября",
+        "10" to "октября",
+        "11" to "ноября",
+        "12" to "декабря"
     )
-    if (Regex("""^(\d\d|\d).(\d|\d\d).\d+$""").containsMatchIn(digital) && month.contains(date[1].toInt()) && date[0].toInt() <= 31) {
+    if (Regex("""^(\d\d|\d).(\d|\d\d).\d+$""").containsMatchIn(digital) && month.contains(date[1]) && date[0].toInt() <= 31) {
         if (date[1].toInt() != 2 || date[0].toInt() < 29) {
-            return String.format("%02d %w %d", date[0].toInt(), month[date[1].toInt()], date[2].toInt())
+            return String.format("%02d %w %d", date[0].toInt(), month[date[1]], date[2].toInt())
         }
     }
     return ""
