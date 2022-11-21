@@ -109,7 +109,7 @@ fun dateStrToDigit(str: String): String {
         "ноября" to 11,
         "декабря" to 12
     )
-    if (Regex("""^(\d\d|\d) .* [0-9]+$""").containsMatchIn(str) && month.contains(date[1])) {
+    if (Regex("""^(\d\d|\d) .* \d{1,4}$""").containsMatchIn(str) && month.contains(date[1])) {
         if (date[0].toInt() <= daysInMonth(date[1], date[2].toInt())) {
             return String.format("%02d.%02d.%d", date[0].toInt(), month[date[1]], date[2].toInt())
         }
@@ -143,7 +143,7 @@ fun dateDigitToStr(digital: String): String {
         "11" to "ноября",
         "12" to "декабря"
     )
-    if (Regex("""^(\d\d|\d).(\d|\d\d).\d\d\d\d$""").containsMatchIn(digital) && month.contains(date[1])) {
+    if (Regex("""^(\d\d|\d).(\d|\d\d).\d{1,4}$""").containsMatchIn(digital) && month.contains(date[1])) {
         if (date[0].toInt() <= daysInMonth(month[date[1]], date[2].toInt())) {
             return String.format("%d %s %d", date[0].toInt(), month[date[1]], date[2].toInt())
         }
