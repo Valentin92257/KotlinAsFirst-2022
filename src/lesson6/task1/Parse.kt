@@ -75,6 +75,24 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
+fun daysInMonth(month: String?): Int {
+    return when (month) {
+        "января" -> 31
+        "февраля" -> 28
+        "марта" -> 31
+        "апреля" -> 30
+        "мая" -> 31
+        "июня" -> 30
+        "июля" -> 31
+        "августа" -> 31
+        "сентября" -> 30
+        "октября" -> 31
+        "ноября" -> 30
+        "декабря" -> 31
+        else -> -1
+    }
+}
+
 fun dateStrToDigit(str: String): String {
     val date = str.split(" ")
     val month = mutableMapOf(
@@ -92,7 +110,7 @@ fun dateStrToDigit(str: String): String {
         "декабря" to 12
     )
     if (Regex("""^(\d\d|\d) .* ([0-9]+)$""").containsMatchIn(str) && month.contains(date[1]) && date[0].toInt() <= 31) {
-        if (month[date[1]] != 2 || date[0].toInt() < 29) {
+        if (date[0].toInt() == daysInMonth(date[1])) {
             return String.format("%02d.%02d.%d", date[0].toInt(), month[date[1]], date[2].toInt())
         }
     }
@@ -125,8 +143,8 @@ fun dateDigitToStr(digital: String): String {
         "11" to "ноября",
         "12" to "декабря"
     )
-    if (Regex("""^(\d\d|\d).(\d|\d\d).\d+$""").containsMatchIn(digital) && month.contains(date[1]) && date[0].toInt() <= 31) {
-        if (date[1].toInt() != 2 || date[0].toInt() < 29) {
+    if (Regex("""^(\d\d|\d).(\d|\d\d).\d+$""").containsMatchIn(digital) && month.contains(date[1])) {
+        if (date[0].toInt() <= daysInMonth(month[date[1]])) {
             return String.format("%d %s %d", date[0].toInt(), month[date[1]], date[2].toInt())
         }
     }
