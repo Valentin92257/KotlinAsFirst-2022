@@ -109,8 +109,8 @@ fun dateStrToDigit(str: String): String {
         "ноября" to 11,
         "декабря" to 12
     )
-    if (Regex("""^(\d\d|\d) .* ([0-9]+)$""").containsMatchIn(str) && month.contains(date[1]) && date[0].toInt() <= 31) {
-        if (date[0].toInt() == daysInMonth(date[1], date[2].toInt())) {
+    if (Regex("""^(\d\d|\d) .* [0-9]+$""").containsMatchIn(str) && month.contains(date[1])) {
+        if (date[1].toInt() <= daysInMonth(date[1], date[2].toInt())) {
             return String.format("%02d.%02d.%d", date[0].toInt(), month[date[1]], date[2].toInt())
         }
     }
