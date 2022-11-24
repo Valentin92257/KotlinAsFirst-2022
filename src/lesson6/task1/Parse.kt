@@ -200,7 +200,7 @@ fun bestHighJump(jumps: String): Int {
     val a = jumps.split(" ")
     var c = -1
     if ("$jumps ".matches(Regex("""(\d+ [%\-+]+ )+""")))
-        for (i in 0..a.size - 1 step 2) {
+        for (i in a.indices step 2) {
             if (a[i + 1].contains(Regex("""\+"""))) c = maxOf(a[i].toInt(), c)
         }
     return c
@@ -213,9 +213,20 @@ fun bestHighJump(jumps: String): Int {
  * использующее целые положительные числа, плюсы и минусы, разделённые пробелами.
  * Наличие двух знаков подряд "13 + + 10" или двух чисел подряд "1 2" не допускается.
  * Вернуть значение выражения (6 для примера).
- * Про нарушении формата входной строки бросить исключение IllegalArgumentException
+ * При нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if (!" + $expression".matches(Regex("""( [+-] \d+)+"""))) throw IllegalArgumentException()
+    val a = "+ $expression".split(" ")
+    var result = 0
+    for (i in 0..a.size - 2 step 2) {
+        when (a[i]) {
+            "+" -> result += a[i + 1].toInt()
+            "-" -> result -= a[i + 1].toInt()
+        }
+    }
+    return result
+}
 
 /**
  * Сложная (6 баллов)
