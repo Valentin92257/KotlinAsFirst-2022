@@ -98,7 +98,10 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = grades.toList().groupBy(
+    keySelector = { it.second },
+    valueTransform = { it.first }
+).toMap()
 
 
 /**
@@ -204,7 +207,10 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    val a = stuff.filter { it.value.first == kind }.map { it.value.second to it.key }.toMap()
+    return if (a.isNotEmpty()) a[a.minOf { it.key }] else null
+}
 
 /**
  * Средняя (3 балла)
@@ -215,7 +221,8 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean =
+    chars.map { it.toString() }.containsAll(word.split("").toSet() - "")
 
 /**
  * Средняя (4 балла)
