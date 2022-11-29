@@ -221,7 +221,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean =
-    chars.map { it.toString() }.containsAll(word.split("").toSet() - "")
+    chars.map { it.toString().lowercase() }.containsAll(word.lowercase().split("").toSet() - "")
 
 /**
  * Средняя (4 балла)
@@ -336,21 +336,18 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     val trl = treasures.toList()
-    var p = -1
+    var p: Int
     val fin = mutableSetOf<String>()
     val a: Array<IntArray> = Array(treasures.size + 1) { IntArray(capacity + 1) { 0 } }
     for (i in 0..treasures.size) {
-        fin.clear()
         for (j in 0..capacity) {
             if (i == 0 || j == 0) a[i][j] = 0
             else {
                 if (trl[i - 1].second.first > j) a[i][j] = a[i - 1][j]
                 else {
-                    if (trl[i - 1].second.second + a[i - 1][j - trl[i - 1].second.first] > p) {
-                        fin.add(trl[i - 1].first)
-                    }
                     p = a[i - 1][j]
                     a[i][j] = maxOf(p, trl[i - 1].second.second + a[i - 1][j - trl[i - 1].second.first])
+                    if(trl[i - 1].second.second + a[i - 1][j - trl[i - 1].second.first] > p) fin.add(trl[i - 1].first)
                 }
             }
         }
