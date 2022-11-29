@@ -2,6 +2,7 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
 
 
 // Урок 6: разбор строк, исключения
@@ -76,23 +77,6 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun daysInMonth(month: String?, year: Int): Int {
-    return when (month) {
-        "января" -> 31
-        "февраля" -> if (year % 400 == 0) 29 else if (year % 100 != 0 && year % 4 == 0) 29 else 28
-        "марта" -> 31
-        "апреля" -> 30
-        "мая" -> 31
-        "июня" -> 30
-        "июля" -> 31
-        "августа" -> 31
-        "сентября" -> 30
-        "октября" -> 31
-        "ноября" -> 30
-        "декабря" -> 31
-        else -> -1
-    }
-}
 
 fun dateStrToDigit(str: String): String {
     val date = str.split(" ")
@@ -111,7 +95,7 @@ fun dateStrToDigit(str: String): String {
         "декабря" to 12
     )
     if (Regex("""^(\d\d|\d) .* \d+$""").containsMatchIn(str) && month.contains(date[1])) {
-        if (date[0].toInt() <= daysInMonth(date[1], date[2].toInt())) {
+        if (date[0].toInt() <= daysInMonth(month[date[1]]!!, date[2].toInt())) {
             return String.format("%02d.%02d.%d", date[0].toInt(), month[date[1]], date[2].toInt())
         }
     }
@@ -145,7 +129,7 @@ fun dateDigitToStr(digital: String): String {
         "12" to "декабря"
     )
     if (Regex("""^(\d\d|\d).(\d|\d\d).\d+$""").containsMatchIn(digital) && month.contains(date[1])) {
-        if (date[0].toInt() <= daysInMonth(month[date[1]], date[2].toInt())) {
+        if (date[0].toInt() <= daysInMonth(date[1].toInt(), date[2].toInt())) {
             return String.format("%d %s %d", date[0].toInt(), month[date[1]], date[2].toInt())
         }
     }
