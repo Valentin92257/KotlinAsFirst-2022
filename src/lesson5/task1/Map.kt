@@ -4,6 +4,7 @@ package lesson5.task1
 
 import lesson4.task1.mean
 
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -185,12 +186,10 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> =
-    stockPrices.groupBy(
-        keySelector = { it.first },
-        valueTransform = { it.second }
-    ).toMap().mapValues { mean(it.value) }
-
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = stockPrices.groupBy(
+    keySelector = { it.first },
+    valueTransform = { it.second }
+).toMap().mapValues { mean(it.value) }
 
 /**
  * Средняя (4 балла)
@@ -335,4 +334,24 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val trl = treasures.toList()
+    val fin = mutableSetOf<String>()
+    val a: Array<IntArray> = Array(treasures.size + 1) { IntArray(capacity + 1) { 0 } }
+    for (i in 0..treasures.size) {
+        for (j in 0..capacity) {
+            if (i == 0 || j == 0) a[i][j] = 0
+            else {
+                if (trl[i - 1].second.first > j) a[i][j] = a[i - 1][j]
+                else {
+                    val p = a[i - 1][j]
+                    a[i][j] = maxOf(p, trl[i - 1].second.second + a[i - 1][j - trl[i - 1].second.first])
+                    if (trl[i - 1].second.second + a[i - 1][j - trl[i - 1].second.first] > p) {
+                        fin.add(trl[i - 1].first)
+                    }
+                }
+            }
+        }
+    }
+    return fin
+}
