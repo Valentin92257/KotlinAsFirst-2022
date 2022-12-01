@@ -359,5 +359,5 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
             }
         }
     }
-    return t[treasures.size][capacity].split(" ").toSet() - " " - ""
+    return t[treasures.size][capacity].split(" ").toSet() - ""
 }
