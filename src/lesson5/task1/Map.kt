@@ -334,4 +334,30 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val trl = treasures.toList()
+    val t: Array<Array<String>> = Array(treasures.size + 1) { Array(capacity + 1) { "" } }
+    val a: Array<IntArray> = Array(treasures.size + 1) { IntArray(capacity + 1) { 0 } }
+    for (i in 0..treasures.size) {
+        for (j in 0..capacity) {
+            if (i == 0 || j == 0) {
+                a[i][j] = 0
+            } else {
+                if (trl[i - 1].second.first > j) {
+                    a[i][j] = a[i - 1][j]
+                    t[i][j] = t[i - 1][j]
+                } else {
+                    val p = a[i - 1][j]
+                    val tp = t[i - 1][j]
+                    a[i][j] = maxOf(p, trl[i - 1].second.second + a[i - 1][j - trl[i - 1].second.first])
+                    if (p < trl[i - 1].second.second + a[i - 1][j - trl[i - 1].second.first]) {
+                        t[i][j] = trl[i - 1].first + " " + t[i - 1][j - trl[i - 1].second.first]
+                    } else {
+                        t[i][j] = tp
+                    }
+                }
+            }
+        }
+    }
+    return t[treasures.size][capacity].split(" ").toSet() - " " - ""
+}
