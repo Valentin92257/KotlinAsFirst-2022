@@ -131,7 +131,7 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    val file = File(inputName).bufferedReader().readLines().map {
+    var file = File(inputName).bufferedReader().readLines().map {
         it.replace(Regex("""^\s+|\s+$"""), "")
     }
     val result = File(outputName).bufferedWriter()
@@ -152,6 +152,7 @@ fun centerFile(inputName: String, outputName: String) {
         }
         result.newLine()
     }
+    if (file.isEmpty()) result.write("")
     result.close()
 }
 
