@@ -3,7 +3,6 @@
 package lesson7.task1
 
 import java.io.File
-import kotlin.system.exitProcess
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -136,26 +135,25 @@ fun centerFile(inputName: String, outputName: String) {
         it.replace(Regex("""^\s+|\s+$"""), "")
     }
     val result = File(outputName).bufferedWriter()
-    if (file.isEmpty()) {
-        result.write("")
-        exitProcess(0)
-    }
-    val max = file.maxOf { it.length - 1 }
-    for (i in file) {
-        var index = max / 2
-        if (max % 2 != 0) index -= 1
-        if (i.length - 1 == max) result.write(i)
-        else {
-            var center = (i.length - 1) / 2
-            if ((i.length - 1) % 2 != 0) center += 1
-            val str = buildString {
-                for (p in 0 until index - center) {
-                    append(" ")
+    if (file.isEmpty()) result.write("")
+    else {
+        val max = file.maxOf { it.length - 1 }
+        for (i in file) {
+            var index = max / 2
+            if (max % 2 != 0) index -= 1
+            if (i.length - 1 == max) result.write(i)
+            else {
+                var center = (i.length - 1) / 2
+                if ((i.length - 1) % 2 != 0 && i != "") center += 1
+                val str = buildString {
+                    for (p in 0 until index - center) {
+                        append(" ")
+                    }
                 }
+                result.write(str + i)
             }
-            result.write(str + i)
+            result.newLine()
         }
-        result.newLine()
     }
     result.close()
 }
