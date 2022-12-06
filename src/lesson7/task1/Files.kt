@@ -110,32 +110,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    val a = File(inputName).bufferedReader().readLines()
-    val fin = File(outputName).bufferedWriter()
-    for (i in a) {
-        for (s in 0..i.length - 2) {
-            when (i[s].toString().lowercase()) {
-                "ж" -> {
-                    if ((i[s] + i[s + 1].toString()).matches(Regex("""[жЖ][ы]"""))) {
-                        fin.write("и")
-                    }
-                    if ((i[s] + i[s + 1].toString()).matches(Regex("""[жЖ][Ы]"""))) {
-                        fin.write("И")
-                    }
-                }
-
-                "ч" -> {
-                    if ((i[s] + i[s + 1].toString()).matches(Regex("""[Чч][я]"""))) {
-                        fin.write("а")
-                    }
-                    if ((i[s] + i[s + 1].toString()).matches(Regex("""[Чч][Я]"""))) {
-                        fin.write("А")
-                    }
-                }
-            }
-            fin.close()
-        }
-    }
+    TODO()
 }
 
 /**
@@ -177,6 +152,7 @@ fun centerFile(inputName: String, outputName: String) {
         }
         result.newLine()
     }
+    if (file.isEmpty()) result.write("")
     result.close()
 }
 
