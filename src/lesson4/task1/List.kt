@@ -1,4 +1,4 @@
-@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
+@file:Suppress("ConvertCallChainIntoSequence")
 
 package lesson4.task1
 
@@ -127,7 +127,7 @@ fun abs(v: List<Double>): Double = sqrt(v.map { it * it }.sum())
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = if (list.size > 0) {
+fun mean(list: List<Double>): Double = if (list.isNotEmpty()) {
     list.sum() / list.size.toDouble()
 } else {
     0.0
@@ -362,7 +362,7 @@ fun russian(n: Int): String {
         "девятнадцать"
     )
     var a = listOf<Int>()
-    var b: List<Int>
+    val b: List<Int>
     var c = ""
     if (n >= 1000) {
         a = convert(n / 1000, 10)

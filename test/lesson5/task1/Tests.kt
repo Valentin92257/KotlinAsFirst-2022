@@ -335,4 +335,17 @@ class Tests {
             )
         )
     }
+
+
+    @Test
+    fun petsDelivery() {
+        assertEquals(
+            "",
+            petsDelivery(
+                listOf("par: kjaxs - 10000, kjaxs - 10000, kjaxs - 10000", "per: kjaxs - 10000"),
+                listOf("par: kjaxs - 10000", "par: kjaxs - 10000"),
+                8
+            )
+        )
+    }
 }

@@ -66,7 +66,7 @@ fun deleteMarked(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
     val reading = File(inputName).bufferedReader().readLines()
     for (i in reading) {
-        if (i.contains(Regex("""^_"""))) {
+        if (i.startsWith("_")) {
             continue
         }
         writer.write(i)
@@ -110,7 +110,32 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val a = File(inputName).bufferedReader().readLines()
+    val fin = File(outputName).bufferedWriter()
+    for (i in a) {
+        for (s in 0..i.length - 2) {
+            when (i[s].toString().lowercase()) {
+                "ж" -> {
+                    if ((i[s] + i[s + 1].toString()).matches(Regex("""[жЖ][ы]"""))) {
+                        fin.write("и")
+                    }
+                    if ((i[s] + i[s + 1].toString()).matches(Regex("""[жЖ][Ы]"""))) {
+                        fin.write("И")
+                    }
+                }
+
+                "ч" -> {
+                    if ((i[s] + i[s + 1].toString()).matches(Regex("""[Чч][я]"""))) {
+                        fin.write("а")
+                    }
+                    if ((i[s] + i[s + 1].toString()).matches(Regex("""[Чч][Я]"""))) {
+                        fin.write("А")
+                    }
+                }
+            }
+            fin.close()
+        }
+    }
 }
 
 /**
@@ -131,7 +156,28 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val file = File(inputName).bufferedReader().readLines().map {
+        it.replace(Regex("""^\s+|\s+$"""), "")
+    }
+    val result = File(outputName).bufferedWriter()
+    val max = file.maxOf { it.length - 1 }
+    for (i in file) {
+        var index = max / 2
+        if (max % 2 != 0) index -= 1
+        if (i.length - 1 == max) result.write(i)
+        else {
+            var center = (i.length - 1) / 2
+            if ((i.length - 1) % 2 != 0 && i != "") center += 1
+            val str = buildString {
+                for (p in 0 until index - center) {
+                    append(" ")
+                }
+            }
+            result.write(str + i)
+        }
+        result.newLine()
+    }
+    result.close()
 }
 
 /**
