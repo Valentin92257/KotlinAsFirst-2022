@@ -134,14 +134,16 @@ fun centerFile(inputName: String, outputName: String) {
     var file = File(inputName).bufferedReader().readLines().map {
         it.replace(Regex("""^\s+|\s+$"""), "")
     }
-    //file = "ббааааба\nаба ".split(Regex("""\s""")).toList()
+    //file = "ао\nАО - ".split(Regex("""\s""")).toList().map {
+      //  it.replace(Regex("""^\s+|\s+$"""), "")
+    //}
     val result = File(outputName).bufferedWriter()
     if (file.isEmpty()) result.write("")
     else {
         val max = file.maxOf { it.length - 1}
         for (i in file) {
             var index = max / 2
-            if (max % 2 != 0 && i != "") index += 1
+            if (max % 2 != 0 && i != "" && index != 0) index += 1
             if (i.length - 1 == max || max <= 0) result.write(i)
             else {
                 var center = (i.length - 1) / 2
