@@ -130,13 +130,13 @@ fun sibilants(inputName: String, outputName: String) {
  * 4) Число строк в выходном файле должно быть равно числу строк во входном (в т. ч. пустых)
  *
  */
-fun centerFile(inputName: String, outputName: String) {
+fun centerFile(inputName: String, outputName: String) /*{
     var file = File(inputName).bufferedReader().readLines().map {
         it.replace(Regex("""^\s+|\s+$"""), "")
     }
-    //file = "аааша\nгбумабщд --- ".split(Regex("""\n""")).toList().map {
-        //it.replace(Regex("""^\s+|\s+$"""), "")
-    //}
+    file = "АШ\\nаш / аш, АШ, АШ / аш, ".split(Regex("""\s""")).toList().map {
+        it.replace(Regex("""^\s+|\s+$"""), "")
+    }
     val result = File(outputName).bufferedWriter()
     if (file.isEmpty()) result.write("")
     else {
@@ -171,6 +171,63 @@ fun centerFile(inputName: String, outputName: String) {
         }
     }
 
+    result.close()
+}*/ {
+    var file = File(inputName).bufferedReader().readLines().map {
+        it.replace(Regex("""^\s+|\s+$"""), "")
+    }
+    val result = File(outputName).bufferedWriter()
+    if (file.isEmpty()) result.write("")
+    else {
+        val max = file.maxOf { it.length }
+        val a = max / 2
+        for (i in file) {
+            when {
+                max == i.length -> result.write(i)
+                max % 2 == 0 && i.length % 2 == 0 -> {
+                    val center = i.length / 2
+                    val str = buildString {
+                        for (x in 0 until a - center) {
+                            append(" ")
+                        }
+                    }
+                    result.write(str + i)
+                }
+
+                max % 2 == 1 && i.length % 2 == 1 -> {
+                    val center = i.length / 2
+                    val str = buildString {
+                        for (x in 0 until a - center) {
+                            append(" ")
+                        }
+                    }
+                    result.write(str + i)
+                }
+
+                i.length % 2 == 1 && max % 2 == 0 -> {
+                    val center = i.length / 2
+                    val str = buildString {
+                        for (x in 0 until a - center - 1) {
+                            append(" ")
+                        }
+                    }
+                    result.write(str + i)
+                }
+
+                i.length % 2 == 0 && max % 2 == 1 -> {
+                    val center = i.length / 2
+                    val str = buildString {
+                        for (i in 0 until a - center) {
+                            append(" ")
+                        }
+                    }
+                    result.write(str + i)
+                }
+
+            }
+            result.newLine()
+        }
+    }
     result.close()
 }
 
