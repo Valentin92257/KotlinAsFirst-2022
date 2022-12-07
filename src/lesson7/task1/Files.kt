@@ -140,8 +140,8 @@ fun centerFile(inputName: String, outputName: String) {
         val max = file.maxOf { it.length - 1 }
         for (i in file) {
             var index = max / 2
-            if (max % 2 != 0) index -= 1
-            if (i.length - 1 == max) result.write(i)
+            if (max % 2 != 0) index += 1
+            if (i.length - 1 == max || max <= 0) result.write(i)
             else {
                 var center = (i.length - 1) / 2
                 if ((i.length - 1) % 2 != 0 && i != "") center += 1
