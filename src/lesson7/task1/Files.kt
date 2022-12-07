@@ -134,7 +134,7 @@ fun centerFile(inputName: String, outputName: String) {
     var file = File(inputName).bufferedReader().readLines().map {
         it.replace(Regex("""^\s+|\s+$"""), "")
     }
-    file = "ма\nааба: ".split(Regex("""\s""")).toList()
+    //file = "ма\nааба: ".split(Regex("""\s""")).toList()
     val result = File(outputName).bufferedWriter()
     if (file.isEmpty()) result.write("")
     else {
