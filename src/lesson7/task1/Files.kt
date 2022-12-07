@@ -134,7 +134,7 @@ fun centerFile(inputName: String, outputName: String) {
     var file = File(inputName).bufferedReader().readLines().map {
         it.replace(Regex("""^\s+|\s+$"""), "")
     }
-    //file = "баа; БАА --- БАА\nбаа БАА --- баа: баа; баа: БАА / ".split(Regex("""\n""")).toList().map {
+    //file = "аааша\nгбумабщд --- ".split(Regex("""\n""")).toList().map {
         //it.replace(Regex("""^\s+|\s+$"""), "")
     //}
     val result = File(outputName).bufferedWriter()
@@ -146,7 +146,8 @@ fun centerFile(inputName: String, outputName: String) {
             if (i.length - 1 == max || max <= 0) result.write(i)
             else {
                 var center = (i.length - 1) / 2
-                if (center % 2 != 0) {
+                if ((i.length - 1) % 2 != 0) {
+                    if (max % 2 != 0 && i != "" && index != 0) index += 1
                     if ((i.length - 1) % 2 != max % 2 && i != "" && center != 0) center += 1
                     val str = buildString {
                         for (p in 0 until index - center) {
@@ -155,7 +156,7 @@ fun centerFile(inputName: String, outputName: String) {
                     }
                     result.write(str + i)
                 } else {
-                    if (max % 2 != 0 && i != "" && index != 0) index += 1
+
                     if ((i.length - 1) % 2 != max % 2 && i != "" && center == 0) center += 1
                     val str = buildString {
                         for (p in 0 until index - center) {
