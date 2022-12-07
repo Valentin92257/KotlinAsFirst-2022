@@ -130,49 +130,7 @@ fun sibilants(inputName: String, outputName: String) {
  * 4) Число строк в выходном файле должно быть равно числу строк во входном (в т. ч. пустых)
  *
  */
-fun centerFile(inputName: String, outputName: String) /*{
-    var file = File(inputName).bufferedReader().readLines().map {
-        it.replace(Regex("""^\s+|\s+$"""), "")
-    }
-    file = "АШ\\nаш / аш, АШ, АШ / аш, ".split(Regex("""\s""")).toList().map {
-        it.replace(Regex("""^\s+|\s+$"""), "")
-    }
-    val result = File(outputName).bufferedWriter()
-    if (file.isEmpty()) result.write("")
-    else {
-        val max = file.maxOf { it.length - 1 }
-        for (i in file) {
-            var index = max / 2
-            if (i.length - 1 == max || max <= 0) result.write(i)
-            else {
-                var center = (i.length - 1) / 2
-                if ((i.length - 1) % 2 != 0) {
-                    if (max % 2 != 0 && i != "" && index != 0) index += 1
-                    if ((i.length - 1) % 2 != max % 2 && i != "" && center != 0) center += 1
-                    val str = buildString {
-                        for (p in 0 until index - center) {
-                            append(" ")
-                        }
-                    }
-                    result.write(str + i)
-                } else {
-
-                    if ((i.length - 1) % 2 != max % 2 && i != "" && center == 0) center += 1
-                    val str = buildString {
-                        for (p in 0 until index - center) {
-                            append(" ")
-                        }
-                    }
-                    result.write(str + i)
-                }
-
-            }
-            result.newLine()
-        }
-    }
-
-    result.close()
-}*/ {
+fun centerFile(inputName: String, outputName: String) {
     val file = File(inputName).bufferedReader().readLines().map {
         it.replace(Regex("""^\s+|\s+$"""), "")
     }
