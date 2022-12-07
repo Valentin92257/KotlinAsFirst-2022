@@ -173,58 +173,42 @@ fun centerFile(inputName: String, outputName: String) /*{
 
     result.close()
 }*/ {
-    var file = File(inputName).bufferedReader().readLines().map {
+    val file = File(inputName).bufferedReader().readLines().map {
         it.replace(Regex("""^\s+|\s+$"""), "")
     }
+    var str = ""
     val result = File(outputName).bufferedWriter()
     if (file.isEmpty()) result.write("")
     else {
         val max = file.maxOf { it.length }
         val a = max / 2
         for (i in file) {
+            val center = i.length / 2
             when {
-                max == i.length -> result.write(i)
-                max % 2 == 0 && i.length % 2 == 0 -> {
-                    val center = i.length / 2
-                    val str = buildString {
-                        for (x in 0 until a - center) {
-                            append(" ")
-                        }
-                    }
-                    result.write(str + i)
+                max == i.length -> {
+                    result.write(i)
+                    result.newLine()
+                    continue
                 }
 
-                max % 2 == 1 && i.length % 2 == 1 -> {
-                    val center = i.length / 2
-                    val str = buildString {
+                (max % 2 == 0 && i.length % 2 == 0) || (max % 2 == 1 && i.length % 2 == 1) || (i.length % 2 == 0 && max % 2 == 1) -> {
+                    str = buildString {
                         for (x in 0 until a - center) {
                             append(" ")
                         }
                     }
-                    result.write(str + i)
                 }
 
                 i.length % 2 == 1 && max % 2 == 0 -> {
-                    val center = i.length / 2
-                    val str = buildString {
+                    str = buildString {
                         for (x in 0 until a - center - 1) {
                             append(" ")
                         }
                     }
-                    result.write(str + i)
-                }
-
-                i.length % 2 == 0 && max % 2 == 1 -> {
-                    val center = i.length / 2
-                    val str = buildString {
-                        for (i in 0 until a - center) {
-                            append(" ")
-                        }
-                    }
-                    result.write(str + i)
                 }
 
             }
+            result.write(str + i)
             result.newLine()
         }
     }
