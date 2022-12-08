@@ -2,6 +2,7 @@
 
 package lesson7.task1
 
+
 import java.io.File
 
 // Урок 7: работа с файлами
@@ -132,7 +133,7 @@ fun sibilants(inputName: String, outputName: String) {
  */
 fun centerFile(inputName: String, outputName: String) {
     val file = File(inputName).bufferedReader().readLines().map {
-        it.replace(Regex("""^\s+|\s+$"""), "")
+        it.trim()
     }
     var str = ""
     val result = File(outputName).bufferedWriter()
