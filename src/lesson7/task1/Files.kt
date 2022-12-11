@@ -205,8 +205,11 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     val file = File(inputName).bufferedReader().readLines().map { it.trim().replace(Regex(""" +"""), " ") }
     val result = File(outputName).bufferedWriter()
     val max = file.maxOf { it.length }
-        var count1: Int
+    var count1: Int
     var count: Int
+    if(file.isEmpty()){
+        result.write("")
+    }
     /*for (i in file) {
         if (i.length == max) {
             result.write(i)
