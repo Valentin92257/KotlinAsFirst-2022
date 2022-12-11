@@ -209,33 +209,31 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     } else {
         val max = file.maxOf { it.length }
         for (i in file) {
-            if (i.matches(Regex(""" +"""))) {
-                result.write("")
-                result.newLine()
-                continue
-            }
             val count = i.count { it.toString() == " " }
-            if (count == 0 || i.length == max) {
-                result.write(i)
-                result.newLine()
-                continue
-            }
-            val count1 = (max - i.length + count) / count
-            var c = 0
-            val res = buildString {
-                for (b in i) {
-                    if (b.toString() == " ") {
-                        for (x in 0 until count1) {
-                            append(" ")
+            when {
+                (i.matches(Regex(""" +"""))) -> result.write("")
+
+                (count == 0 || i.length == max) -> result.write(i)
+
+                else -> {
+                    val count1 = (max - i.length + count) / count
+                    var c = 0
+                    val res = buildString {
+                        for (b in i) {
+                            if (b.toString() == " ") {
+                                for (x in 0 until count1) {
+                                    append(" ")
+                                }
+                                if ((max - i.length) % count > c) {
+                                    c += 1
+                                    append(" ")
+                                }
+                            } else append(b)
                         }
-                        if ((max - i.length) % count > c) {
-                            c += 1
-                            append(" ")
-                        }
-                    } else append(b)
+                    }
+                    result.write(res)
                 }
             }
-            result.write(res)
             result.newLine()
         }
     }
