@@ -209,6 +209,11 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     } else {
         val max = file.maxOf { it.length }
         for (i in file) {
+            if (i.matches(Regex(""" +"""))) {
+                result.write("")
+                result.newLine()
+                continue
+            }
             val count = i.count { it.toString() == " " }
             if (count == 0 || i.length == max) {
                 result.write(i)
