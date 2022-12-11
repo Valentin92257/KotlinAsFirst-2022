@@ -210,28 +210,16 @@ fun alignFileByWidth(inputName: String, outputName: String) {
         val max = file.maxOf { it.length }
         for (i in file) {
             val count = i.count { it.toString() == " " }
-            if (count == 0 || i.length == max || i.matches(Regex("""^ +$"""))) {
+            if (count == 0 || i.length == max) {
                 result.write(i)
                 result.newLine()
                 continue
             }
             val count1 = (max - i.length + count) / count
             var c = 0
-            /*for (a in 0 until count) {
-                val str = buildString {
-                    for (x in 0 until count1) {
-                        append(" ")
-                    }
-                    if ((max - i.length) % count > c) {
-                        c += 1
-                        append(" ")
-                    }
-                }
-                w.add(str)
-            }*/
             val res = buildString {
-                for (b in i.indices) {
-                    if (i[b].toString() == " ") {
+                for (b in i) {
+                    if (b.toString() == " ") {
                         for (x in 0 until count1) {
                             append(" ")
                         }
@@ -239,7 +227,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
                             c += 1
                             append(" ")
                         }
-                    } else append(i[b])
+                    } else append(b)
                 }
             }
             result.write(res)
