@@ -209,6 +209,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     var count: Int
     if (file.isEmpty()) {
         result.write("")
+        result.close()
     } else {
         /*for (i in file) {
             if (i.length == max) {
