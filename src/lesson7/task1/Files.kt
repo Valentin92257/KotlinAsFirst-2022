@@ -204,13 +204,13 @@ fun centerFile(inputName: String, outputName: String) {
 fun alignFileByWidth(inputName: String, outputName: String) {
     var file = File(inputName).bufferedReader().readLines().map { it.trim().replace(Regex(""" +"""), " ") }
     val result = File(outputName).bufferedWriter()
-    val max = file.maxOf { it.length }
-    var count1: Int
-    var count: Int
-    if (file.isEmpty() || (file.size == 1 && file[0] == "")) {
+    if (file.isEmpty()) {
         result.write("")
         result.close()
     } else {
+        val max = file.maxOf { it.length }
+        var count1: Int
+        var count: Int
         /*for (i in file) {
             if (i.length == max) {
                 result.write(i)
