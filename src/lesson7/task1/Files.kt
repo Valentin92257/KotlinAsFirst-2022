@@ -202,7 +202,80 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    val file = File(inputName).bufferedReader().readLines().map { it.trim().replace(Regex(""" +"""), " ") }
+    val result = File(outputName).bufferedWriter()
+    val max = file.maxOf { it.length }
+        var count1: Int
+    var count: Int
+    /*for (i in file) {
+        if (i.length == max) {
+            result.write(i)
+            result.newLine()
+            continue
+        }
+        if (!i.contains(" ")) {
+            result.write(i)
+            result.newLine()
+            continue
+        }
+        var s = 0
+        for (x in i) {
+            if (x == ' ') count += 1
+        }
+        println(count)
+        str2 = i
+        while (str2.length != max) {
+            str2 = str2.replaceFirst(str, " " + str)
+            println(str2)
+            s += 1
+            count1 += 1
+            if (count == count1) {
+                count1 = 0
+                str += " "
+            }
+        }
+        s = 0
+        str = " "
+        result.write(str2)
+        result.newLine()
+    }*/
+    for (i in file) {
+        count = i.count { it.toString() == " " }
+        if (count == 0 || i.length == max || i.matches(Regex("""^ +$"""))) {
+            result.write(i)
+            result.newLine()
+            continue
+
+        }
+        count1 = (max - i.length + count ) / count
+        var c = 0
+        var res = ""
+        val w = mutableListOf<String>()
+        for (a in 0 until count) {
+            val str = buildString {
+                for (x in 0 until count1) {
+                    append(" ")
+                }
+                if ((max - i.length) % count > c) {
+                    c += 1
+                    append(" ")
+                }
+            }
+            w.add(str)
+        }
+        c = 0
+        for (b in i.indices) {
+            //println(i)
+            if (i[b].toString() == " " && i[b + 1].toString() != " ") {
+                res += w[c]
+                c += 1
+            } else res += i[b]
+        }
+        result.write(res)
+        result.newLine()
+
+    }
+    result.close()
 }
 
 /**

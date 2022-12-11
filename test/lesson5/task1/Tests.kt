@@ -139,6 +139,7 @@ class Tests {
         subtractOf(from, mapOf("a" to "z"))
         assertEquals(mapOf("b" to "c"), from)
     }
+
     @Test
     @Tag("2")
     fun whoAreInBoth() {
@@ -340,12 +341,58 @@ class Tests {
     @Test
     fun petsDelivery() {
         assertEquals(
-            "",
+            listOf("par"),
             petsDelivery(
-                listOf("par: kjaxs - 10000, kjaxs - 10000, kjaxs - 10000", "per: kjaxs - 10000"),
-                listOf("par: kjaxs - 10000", "par: kjaxs - 10000"),
-                8
+                listOf("par: kjaxs - 10000, kjas - 10000, kjaxs - 10000", "per: kjaxs - 10000"),
+                listOf("kjaxs", "kjas"),
+                20000
             )
         )
+    }
+
+    @Test
+    fun namesInPhone() {
+        assertEquals(
+            listOf("ABCDEF", "dab", "bab", "aaa", "xaaawyz", "dab"),
+            namesInPhone(
+                listOf("ABCDEF", "dab", "bab", "aaa", "xaaawyz", "iiii", "dab", "hjgfashjdfjh", "sakj"),
+                "5923"
+            )
+        )
+    }
+
+    @Test
+    fun neighbours() {
+        assertEquals(
+            listOf("Иванов Петр", "Иванов Петр", "Иванов Петр"),
+            neighbours(
+                listOf(
+                    "Иванов Петр: улица Ленина, 41, кв. 2",
+                    "Иванов Петр: улица Ленина, 41, кв. 3",
+                    "Иванов Петр: улица Ленина, 41, кв. 4",
+                    "Иванов Петр: улица Ленина, 41, кв. 5"
+                ),
+                "Иванов Петр: улица Ленина, 41, кв. 2"
+            )
+        )
+    }
+
+    @Test
+    fun tax() {
+        assertEquals(
+            13.0,
+            tax(
+                "20000$ = 0%, 40000$ = 5%, 60000$ = 10%, other = 25%",
+                100000
+            )
+        )
+        assertEquals(
+            6.0,
+            tax(
+                "100$ = 0%, 300$ = 5%, 700$ = 10%, other = 25%",
+                500
+            )
+        )
+        assertThrows(IllegalArgumentException::class.java) { tax("+2", 1) }
     }
 }
