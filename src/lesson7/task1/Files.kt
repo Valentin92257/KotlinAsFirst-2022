@@ -563,7 +563,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         if (numbers[numbers.size - 1] != str && count < lhv.toString().length) {
             numbers.add((numbers[numbers.size - 3].toInt() + numbers[numbers.size - 2].toInt()).toString() + lhv.toString()[count])
         }
-        //if (numbers[numbers.size - 1].startsWith("0")) numbers[numbers.size - 1].replace("0", "")
+        if (numbers[numbers.size - 1].startsWith("0")) numbers[numbers.size - 1].replace("0", "")
         numbers.add("-" + (i.toString().toInt() * rhv).toString())
         numbers.add(buildString {
             for (x in 1..maxOf(numbers[numbers.size - 1].length, numbers[numbers.size - 2].length)) {
