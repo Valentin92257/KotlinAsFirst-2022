@@ -576,11 +576,11 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         numbers.add((numbers[numbers.size - 3].toInt() + numbers[numbers.size - 2].toInt()).toString())
     }
     count = 2
-    if ("$lhv | $rhv".length == ("-" + numbers[1]).length || (numbers[1] == "-0" && "$lhv".length >= numbers[1].length)) {
+    if ("$lhv".length == numbers[1].length || (numbers[1] == "-0" && "$lhv".length >= numbers[1].length)) {
         result.write("$lhv | $rhv")
         result.newLine()
         result.write(buildString {
-            for (i in 1.."$lhv | $rhv".length - numbers[1].length) {
+            for (i in 1.."$lhv".length - numbers[1].length) {
                 append(" ")
             }
         } + numbers[1] + buildString {
