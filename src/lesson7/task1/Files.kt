@@ -544,15 +544,18 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val result = File(outputName).bufferedWriter()
     val answer = (lhv / rhv).toString()
-    var str = ""
     var count = -1
     var ost: String
     val numbers = mutableListOf<String>()
-    for (i in lhv.toString()) {
-        str += i
-        count += 1
-        if (str.toInt() / rhv > 0) {
-            break
+    var str = buildString {
+        var sum = ""
+        for (i in lhv.toString()) {
+            append(i)
+            sum += i
+            count += 1
+            if (sum.toInt() / rhv > 0) {
+                break
+            }
         }
     }
     numbers.add(str)
@@ -560,9 +563,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         if (numbers[numbers.size - 1] != str && count < lhv.toString().length) {
             numbers.add((numbers[numbers.size - 3].toInt() + numbers[numbers.size - 2].toInt()).toString() + lhv.toString()[count])
         }
-        if (numbers[numbers.size - 1].startsWith("0")) {
-            numbers[numbers.size - 1].replace("0", "")
-        }
+        //if (numbers[numbers.size - 1].startsWith("0")) numbers[numbers.size - 1].replace("0", "")
         numbers.add("-" + (i.toString().toInt() * rhv).toString())
         numbers.add(buildString {
             for (x in 1..maxOf(numbers[numbers.size - 1].length, numbers[numbers.size - 2].length)) {
