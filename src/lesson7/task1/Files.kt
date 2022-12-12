@@ -542,6 +542,86 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val result = File(outputName).bufferedWriter()
+    val answer = (lhv / rhv).toString()
+    var line = 1
+    var str = ""
+    var count = -1
+    var ost = ""
+    val numbers = mutableListOf<String>()
+    for (i in lhv.toString()) {
+        str += i
+        count += 1
+        if (str.toInt() / rhv > 0) {
+            break
+        }
+    }
+    numbers.add(str)
+    println(answer)
+    println(rhv)
+    println(lhv)
+    for (i in answer) {
+        if (numbers[numbers.size - 1] != str && count < lhv.toString().length) {
+            numbers.add((numbers[numbers.size - 3].toInt() + numbers[numbers.size - 2].toInt()).toString() + lhv.toString()[count])
+        }
+        numbers.add("-" + (i.toString().toInt() * rhv).toString())
+        numbers.add(buildString {
+            for (i in 1..numbers[numbers.size - 1].length) {
+                append("-")
+            }
+        })
+        count += 1
+    }
+    if (numbers[numbers.size - 1] != str && count >= lhv.toString().length) {
+        numbers.add((numbers[numbers.size - 3].toInt() + numbers[numbers.size - 2].toInt()).toString())
+    }
+    count = 2
+    result.write(" $lhv | $rhv")
+    result.newLine()
+    result.write(numbers[1] + buildString {
+        for (i in 1..(" $lhv | ".length - numbers[1].length)) {
+            append(" ")
+        }
+    } + answer)
+    result.newLine()
+    result.write(numbers[count])
+    println(numbers)
+    ost = numbers[count]
+    while(count < numbers.size - 2) {
+        count += 1
+        str = buildString {
+            for(i in 1..ost.length + 1 - numbers[count].length){
+                append(" ")
+            }
+        }
+        result.newLine()
+        result.write(str + numbers[count])
+        if(count < numbers.size - 2) count += 1
+        else break
+        str = buildString {
+            for(i in 1..ost.length + 1 - numbers[count].length){
+                append(" ")
+            }
+        }
+        result.newLine()
+        result.write(str + numbers[count])
+        if(count < numbers.size - 2) count += 1
+        else break
+        str = buildString {
+            for(i in 1..ost.length + 1 - numbers[count].length){
+                append(" ")
+            }
+        }
+        result.newLine()
+        result.write(str + numbers[count])
+        ost = str + numbers[count]
+    }
+    result.newLine()
+    result.write(buildString {
+        for(i in 1..ost.length - numbers[count+1].length){
+            append(" ")
+        }
+    } + numbers[count + 1])
+    result.close()
 }
 
