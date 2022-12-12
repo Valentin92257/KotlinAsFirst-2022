@@ -579,7 +579,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     result.write(" $lhv | $rhv")
     result.newLine()
     result.write(numbers[1] + buildString {
-        for (i in 1..("$lhv | ".length - numbers[1].length)) {
+        for (i in 1..(" $lhv | ".length - numbers[1].length)) {
             append(" ")
         }
     } + answer)
