@@ -544,10 +544,9 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val result = File(outputName).bufferedWriter()
     val answer = (lhv / rhv).toString()
-    var line = 1
     var str = ""
     var count = -1
-    var ost = ""
+    var ost: String
     val numbers = mutableListOf<String>()
     for (i in lhv.toString()) {
         str += i
@@ -557,19 +556,16 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         }
     }
     numbers.add(str)
-    println(answer)
-    println(rhv)
-    println(lhv)
     for (i in answer) {
         if (numbers[numbers.size - 1] != str && count < lhv.toString().length) {
             numbers.add((numbers[numbers.size - 3].toInt() + numbers[numbers.size - 2].toInt()).toString() + lhv.toString()[count])
         }
-        if(numbers[numbers.size - 1].startsWith("0")){
-            numbers[numbers.size - 1].replace("0","")
+        if (numbers[numbers.size - 1].startsWith("0")) {
+            numbers[numbers.size - 1].replace("0", "")
         }
         numbers.add("-" + (i.toString().toInt() * rhv).toString())
         numbers.add(buildString {
-            for (i in 1..maxOf(numbers[numbers.size - 1].length , numbers[numbers.size - 2].length)) {
+            for (x in 1..maxOf(numbers[numbers.size - 1].length, numbers[numbers.size - 2].length)) {
                 append("-")
             }
         })
@@ -588,30 +584,29 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     } + answer)
     result.newLine()
     result.write(numbers[count])
-    println(numbers)
     ost = numbers[count]
-    while(count < numbers.size - 2) {
+    while (count < numbers.size - 2) {
         count += 1
         str = buildString {
-            for(i in 1..ost.length + 1 - numbers[count].length){
+            for (i in 1..ost.length + 1 - numbers[count].length) {
                 append(" ")
             }
         }
         result.newLine()
         result.write(str + numbers[count])
-        if(count < numbers.size - 2) count += 1
+        if (count < numbers.size - 2) count += 1
         else break
         str = buildString {
-            for(i in 1..ost.length + 1 - numbers[count].length){
+            for (i in 1..ost.length + 1 - numbers[count].length) {
                 append(" ")
             }
         }
         result.newLine()
         result.write(str + numbers[count])
-        if(count < numbers.size - 2) count += 1
+        if (count < numbers.size - 2) count += 1
         else break
         str = buildString {
-            for(i in 1..ost.length + 1 - numbers[count].length){
+            for (i in 1..ost.length + 1 - numbers[count].length) {
                 append(" ")
             }
         }
@@ -621,7 +616,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     }
     result.newLine()
     result.write(buildString {
-        for(i in 1..ost.length - numbers[count+1].length){
+        for (i in 1..ost.length - numbers[count + 1].length) {
             append(" ")
         }
     } + numbers[count + 1])
