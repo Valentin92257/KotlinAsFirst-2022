@@ -132,44 +132,40 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    val file = File(inputName).bufferedReader().readLines().map {
-        it.trim()
-    }
+    val file = File(inputName).bufferedReader().readLines().map { it.trim() }
     var str = ""
     val result = File(outputName).bufferedWriter()
-    if (file.isEmpty()) result.write("")
-    else {
-        val max = file.maxOf { it.length }
-        val a = max / 2
-        for (i in file) {
-            val center = i.length / 2
-            when {
-                max == i.length -> {
-                    result.write(i)
-                    result.newLine()
-                    continue
-                }
-
-                (max % 2 == 0 && i.length % 2 == 0) || (max % 2 == 1 && i.length % 2 == 1) || (i.length % 2 == 0 && max % 2 == 1) -> {
-                    str = buildString {
-                        for (x in 0 until a - center) {
-                            append(" ")
-                        }
-                    }
-                }
-
-                i.length % 2 == 1 && max % 2 == 0 -> {
-                    str = buildString {
-                        for (x in 0 until a - center - 1) {
-                            append(" ")
-                        }
-                    }
-                }
-
+    if (file.isEmpty()) {
+        result.write("")
+        return
+    }
+    val max = file.maxOf { it.length }
+    val a = max / 2
+    for (i in file) {
+        val center = i.length / 2
+        when {
+            max == i.length -> {
+                result.write(i)
+                result.newLine()
+                continue
             }
-            result.write(str + i)
-            result.newLine()
+            (max % 2 == 0 && i.length % 2 == 0) || (max % 2 == 1 && i.length % 2 == 1) || (i.length % 2 == 0 && max % 2 == 1) -> {
+                str = buildString {
+                    for (x in 0 until a - center) {
+                        append(" ")
+                    }
+                }
+            }
+            i.length % 2 == 1 && max % 2 == 0 -> {
+                str = buildString {
+                    for (x in 0 until a - center - 1) {
+                        append(" ")
+                    }
+                }
+            }
         }
+        result.write(str + i)
+        result.newLine()
     }
     result.close()
 }
@@ -206,36 +202,36 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     val result = File(outputName).bufferedWriter()
     if (file.isEmpty()) {
         result.write("")
-    } else {
-        val max = file.maxOf { it.length }
-        for (i in file) {
-            val count = i.count { it.toString() == " " }
-            when {
-                (i.matches(Regex(""" +"""))) -> result.write("")
+        return
+    }
+    val max = file.maxOf { it.length }
+    for (i in file) {
+        val count = i.count { it.toString() == " " }
+        when {
+            (i.matches(Regex(""" +"""))) -> result.write("")
 
-                (count == 0 || i.length == max) -> result.write(i)
+            (count == 0 || i.length == max) -> result.write(i)
 
-                else -> {
-                    val count1 = (max - i.length + count) / count
-                    var c = 0
-                    val res = buildString {
-                        for (b in i) {
-                            if (b.toString() == " ") {
-                                for (x in 0 until count1) {
-                                    append(" ")
-                                }
-                                if ((max - i.length) % count > c) {
-                                    c += 1
-                                    append(" ")
-                                }
-                            } else append(b)
-                        }
+            else -> {
+                val count1 = (max - i.length + count) / count
+                var c = 0
+                val res = buildString {
+                    for (b in i) {
+                        if (b.toString() == " ") {
+                            for (x in 0 until count1) {
+                                append(" ")
+                            }
+                            if ((max - i.length) % count > c) {
+                                c += 1
+                                append(" ")
+                            }
+                        } else append(b)
                     }
-                    result.write(res)
                 }
+                result.write(res)
             }
-            result.newLine()
         }
+        result.newLine()
     }
     result.close()
 }
@@ -563,7 +559,9 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         if (numbers[numbers.size - 1] != str && count < lhv.toString().length) {
             numbers.add((numbers[numbers.size - 3].toInt() + numbers[numbers.size - 2].toInt()).toString() + lhv.toString()[count])
         }
-        if (numbers[numbers.size - 1].startsWith("0")) numbers[numbers.size - 1].replace("0", "")
+        //println(numbers[numbers.size - 1])
+        //if (numbers[numbers.size - 1].startsWith("0")) numbers[numbers.size - 1].replace("0", "")
+        //println(numbers[numbers.size - 1])
         numbers.add("-" + (i.toString().toInt() * rhv).toString())
         numbers.add(buildString {
             for (x in 1..maxOf(numbers[numbers.size - 1].length, numbers[numbers.size - 2].length)) {
