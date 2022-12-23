@@ -149,6 +149,7 @@ fun centerFile(inputName: String, outputName: String) {
                 result.newLine()
                 continue
             }
+
             (max % 2 == 0 && i.length % 2 == 0) || (max % 2 == 1 && i.length % 2 == 1) || (i.length % 2 == 0 && max % 2 == 1) -> {
                 str = buildString {
                     for (x in 0 until a - center) {
@@ -156,6 +157,7 @@ fun centerFile(inputName: String, outputName: String) {
                     }
                 }
             }
+
             i.length % 2 == 1 && max % 2 == 0 -> {
                 str = buildString {
                     for (x in 0 until a - center - 1) {
@@ -541,6 +543,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val result = File(outputName).bufferedWriter()
     val answer = (lhv / rhv).toString()
     var count = -1
+    var space = 0
     var ost: String
     val numbers = mutableListOf<String>()
     var str = buildString {
@@ -571,10 +574,22 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         numbers.add((numbers[numbers.size - 3].toInt() + numbers[numbers.size - 2].toInt()).toString())
     }
     count = 2
-    result.write(" $lhv | $rhv")
+    if (lhv / rhv == 0 && lhv.toString().length != 1) result.write("$lhv | $rhv")
+    else {
+        result.write(" $lhv | $rhv")
+        space -= 1
+    }
     result.newLine()
+    if (lhv / rhv == 0 && lhv.toString().length != 1 ) {
+        result.write(buildString {
+            for (i in 1..("$lhv".length - numbers[1].length)) {
+                append(" ")
+                space += 1
+            }
+        })
+    }
     result.write(numbers[1] + buildString {
-        for (i in 1..(" $lhv | ".length - numbers[1].length)) {
+        for (i in 1..("$lhv | ".length - numbers[1].length) - space) {
             append(" ")
         }
     } + answer)
