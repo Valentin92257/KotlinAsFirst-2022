@@ -574,7 +574,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         numbers.add((numbers[numbers.size - 3].toInt() + numbers[numbers.size - 2].toInt()).toString())
     }
     count = 2
-    if (lhv / rhv == 0 && lhv.toString().length != 1) result.write("$lhv | $rhv")
+    if ((lhv / rhv == 0 && lhv.toString().length != 1) || lhv.toString().length == numbers[1].length) result.write("$lhv | $rhv")
     else {
         result.write(" $lhv | $rhv")
         space -= 1
